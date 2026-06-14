@@ -28,7 +28,7 @@ export default function Reminder({reminder, className, promptDeletion}: Reminder
     }
 
     return (
-        <div ref={ref} className={classes} style={{backgroundImage: "url(assets/reminder.png"}}>
+        <div ref={ref} className={classes} style={{backgroundImage: "url(assets/reminder.png)"}}>
             <img className="Reminder__image" src={getImage(role)} alt={role.name}/>
             <p className="Reminder__text">{reminder.text}</p>
             {prompt}

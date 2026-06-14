@@ -20,7 +20,7 @@ export default function Shroud({token}: DeathFlagType) {
     return (
         <>
             <img className='Token__deathFlag' src="/assets/shroud.png" alt="Dead"></img>
-            <img className='Token__deathNoVote' src="/assets/vote.png" alt="Voted"></img>
+            <img className='Token__deathNoVote' src="/assets/dead_vote.png" alt="Voted"></img>
         </>
     )
 }

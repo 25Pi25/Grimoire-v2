@@ -5,8 +5,8 @@
 }
 
 .Token__container {
-    height: 150px; 
-    width: 150px; 
+    height: 140px; 
+    width: 140px; 
     position: absolute; 
     background-repeat: no-repeat; 
     background-size: cover; 
@@ -44,6 +44,13 @@
 
 .TokenName__graphic {
     pointer-events: none;
+    box-shadow: 0.5px 0.5px 1px 1px black, inset 0 0 1px 1px black;
+    border-radius: 50%;
+}
+
+.TokenName__text {
+    -webkit-text-stroke: 20px black,;
+    text-shadow: -1px -1px 0 #DBD1C2, 1px -1px 0 #DBD1C2, -1px  1px 0 #DBD1C2, 1px  1px 0 #DBD1C2;
 }
 
 .TokenName__textPath {
@@ -57,16 +64,16 @@
     pointer-events: none; 
     position: absolute; 
     left: 33.3%; 
-    top: 5%; 
+    top: 0%; 
 }
 
 .Token__deathNoVote {
-    filter: invert(1);
+    /* filter: invert(1); */
     width: 25%; 
     pointer-events: none; 
     position: absolute; 
     left: 37.5%; 
-    top: 17.5%; 
+    top: 2%; 
 }
 
 .Token__name {

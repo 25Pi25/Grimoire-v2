@@ -8,6 +8,11 @@
     src: url(/public/assets/fonts/Dumbledor1.ttf);
 }
 
+@font-face {
+    font-family: TradeGothicLtStd monospace;
+    src: url(/public/assets/fonts/trade-gothic-lt-std.otf);
+}
+
 * {
   user-select: none;
   pointer-events: all;

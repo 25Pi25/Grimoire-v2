@@ -31,16 +31,13 @@ export default function Token({ token, focused = false, className, onClick }: To
     const { roles } = useContext(GameContext) as GameContextType;
 
     const role = roles[token.id];
-    
     return (
         <div
             className={className}
-            style={{
-                backgroundImage: `url(/assets/token.png)`,
-            }}
+            style={{ backgroundImage: `url(/assets/token.png)` }}
             onClick={() => onClick?.()}
         >
-            <img className="Token__image General__backgroundImage" src={getImage(role, token)} alt={role.name}/>
+            <img className="Token__image General__backgroundImage" src={getImage(role, token)} alt={role.name} />
             <Shading token={token} focused={focused} className={className}></Shading>
             <TokenName name={role.name} />
             <Shroud token={token} />

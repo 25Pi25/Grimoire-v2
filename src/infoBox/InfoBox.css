@@ -249,6 +249,8 @@
 }
 
 .InfoCards__content {
+    display: grid;
+    grid-template-columns: 50% 50%;
     position: absolute;
     top: 0px;
     left: 100px;
