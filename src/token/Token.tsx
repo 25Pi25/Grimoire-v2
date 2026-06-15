@@ -37,7 +37,8 @@ export default function Token({ token, focused = false, className, onClick }: To
             style={{
                 backgroundImage: `url(/assets/token-DRfx6YVD.webp)`,
                 backgroundSize: "113% auto",
-                backgroundPosition: "50% 50%"
+                backgroundPosition: "50% 50%",
+                borderRadius: "50%"
             }}
             onClick={() => onClick?.()}
         >
