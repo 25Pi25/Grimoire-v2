@@ -11,7 +11,7 @@ type ReminderType = {
     className?: string,
 }
 
-export default function Reminder({reminder, className, promptDeletion}: ReminderType) {
+export default function Reminder({ reminder, className, promptDeletion }: ReminderType) {
 
     const { roles } = useContext(GameContext) as GameContextType;
 
@@ -28,9 +28,17 @@ export default function Reminder({reminder, className, promptDeletion}: Reminder
     }
 
     return (
-        <div ref={ref} className={classes} style={{backgroundImage: "url(assets/reminder.png)"}}>
-            <img className="Reminder__image" src={getImage(role)} alt={role.name}/>
-            <p className="Reminder__text">{reminder.text}</p>
+        <div ref={ref} className={classes} style={{ backgroundImage: "url(assets/reminder.png)" }}>
+            <img className="Reminder__image" src={getImage(role)} alt={role.name} />
+            {/* <p className="Reminder__text">{reminder.text}</p> */}
+            <svg viewBox="0 0 140 140">
+                <path data-v-8b24badb="" d="M 70 70 m -42.4264 -42.4264 a 60 60 315 1 0 84.8528 84.8528 a 60 60 315 1 0 -84.8528 -84.8528" id="reminder-curve" fill="transparent"></path>
+                <text width="150" x="100%" y="130" textAnchor="middle" className="Reminder__text">
+                    <textPath href="#reminder-curve" className="Reminder__textPath">
+                        {reminder.text}
+                    </textPath>
+                </text>
+            </svg>
             {prompt}
         </div>
     )

@@ -34,7 +34,11 @@ export default function Token({ token, focused = false, className, onClick }: To
     return (
         <div
             className={className}
-            style={{ backgroundImage: `url(/assets/token.png)` }}
+            style={{
+                backgroundImage: `url(/assets/token-DRfx6YVD.webp)`,
+                backgroundSize: "113% auto",
+                backgroundPosition: "50% 50%"
+            }}
             onClick={() => onClick?.()}
         >
             <img className="Token__image General__backgroundImage" src={getImage(role, token)} alt={role.name} />

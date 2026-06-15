@@ -19,10 +19,10 @@
 
 .Token__image {
     top: 0px;
-    left: 5%;
+    left: 2.5%;
     position: absolute;
-    width: 90%;
-    height: 90%;
+    width: 95%;
+    height: 95%;
     pointer-events: none;
 }
 
@@ -49,14 +49,17 @@
 }
 
 .TokenName__text {
-    -webkit-text-stroke: 20px black,;
-    text-shadow: -1px -1px 0 #DBD1C2, 1px -1px 0 #DBD1C2, -1px  1px 0 #DBD1C2, 1px  1px 0 #DBD1C2;
+    filter: drop-shadow(0 1.5px #ffffff80)drop-shadow(0 -1.5px #ffffff80)drop-shadow(1.5px 0 #ffffff80)drop-shadow(-1.5px 0 #ffffff80);
+    text-shadow: none;
+    stroke: none;
 }
 
 .TokenName__textPath {
     fill: black;
-    font-family: Dumbledor monospace;
-    font-size: 24px;
+    stroke-width: 2px;
+    paint-order: stroke;
+    font-family: Dumbledor, serif;
+    font-size: 20px;
 }
 
 .Token__deathFlag {
