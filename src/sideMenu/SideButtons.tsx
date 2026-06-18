@@ -32,12 +32,13 @@ function spreadTokens(tokenSize: number, tokens: TokenData[], roles: RoleData): 
     const centerSize = tokenSize / 2;
     
     const center = { 
-        y: document.documentElement.scrollHeight / 2, 
-        x: document.documentElement.scrollWidth / 2,
+        y: document.documentElement.clientHeight / 2, 
+        x: document.documentElement.clientWidth / 2,
     };
     
     const total = tokens.length;
-    const radius = Math.min(center.y, center.x) - tokenSize - 50 + total * 5;
+    const BASE_RADIUS = tokenSize;
+    const radius = (Math.min(center.y, center.x) - BASE_RADIUS - centerSize) * (Math.min(tokens.length, 15) / 15) + BASE_RADIUS
     if (radius < 0) return tokens;
 
 

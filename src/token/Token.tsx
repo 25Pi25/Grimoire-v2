@@ -13,7 +13,8 @@ type TokenType = {
     token: TokenData
     focused?: boolean
     className?: string,
-    onClick?: () => void
+    onClick?: () => void,
+    title?: boolean
 }
 
 /**
@@ -26,7 +27,7 @@ type TokenType = {
  * @param enabled Whether this token should be allowed to be dragged around.
  * @returns 
  */
-export default function Token({ token, focused = false, className, onClick }: TokenType) {
+export default function Token({ token, focused = false, className, onClick, title }: TokenType) {
 
     const { roles } = useContext(GameContext) as GameContextType;
 
@@ -41,6 +42,7 @@ export default function Token({ token, focused = false, className, onClick }: To
                 borderRadius: "50%"
             }}
             onClick={() => onClick?.()}
+            title={title ? role.ability : undefined}
         >
             <Shading token={token} focused={focused} className={className}></Shading>
             <div className={"TokenName__border"}></div>
