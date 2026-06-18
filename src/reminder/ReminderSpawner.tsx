@@ -13,9 +13,10 @@ type ReminderSpawnerType = {
     left: number,
     ownerUid: number,
     className?: string,
+    onBottom: boolean,
 }
 
-export default function ReminderSpawner({roleId, text, top, left, ownerUid, className}: ReminderSpawnerType) {
+export default function ReminderSpawner({roleId, text, top, left, ownerUid, className, onBottom}: ReminderSpawnerType) {
     const {setGameState} = useContext(GameContext) as GameContextType;
 
     const dummyReminder: ReminderData = {
@@ -29,7 +30,7 @@ export default function ReminderSpawner({roleId, text, top, left, ownerUid, clas
 
     function onDrop(e: DraggableEvent, data: DraggableData) {
         // Don't drop if we aren't outside the box
-        if (data.y > -100) return;
+        if (onBottom ? data.y > -100 : data.y < 100) return;
         const droppedPos = data.node.getBoundingClientRect() as Position
         const spawnPos = {top: droppedPos.top + 12.5, left: droppedPos.left + 12.5}
         const reminder: ReminderData = {

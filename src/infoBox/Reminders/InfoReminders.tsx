@@ -15,9 +15,10 @@ type GhostProp = {
  * The Reminders tab -- where reminders for this token can be instantiated.
  * @param focused If this tab is focused
  * @param focusCallback the callback to focus this tab. 
+ * @param onBottom if the info box is on the bottom.
  * @returns 
  */
-export default function InfoReminders({focused, focusCallback}: InfoTabType) {
+export default function InfoReminders({focused, focusCallback, onBottom}: InfoTabType & {onBottom: boolean}) {
     const {gameState, appState, roles} = useContext(GameContext) as GameContextType;
 
     const landingRef = useRef<HTMLDivElement>(null)
@@ -57,7 +58,8 @@ export default function InfoReminders({focused, focusCallback}: InfoTabType) {
             className="InfoReminders__dynamicReminder"
             left={left} 
             top={top} 
-            roleId={role.id} 
+            roleId={role.id}
+            onBottom={onBottom}
         />
     });
 

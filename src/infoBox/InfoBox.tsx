@@ -37,8 +37,8 @@ export default function InfoBox() {
     const onBottom = useMemo(() => {
         if (!token || !tokenZoneRef.current) return false;
         const height = tokenZoneRef.current.clientHeight;
-        return height * 0.6 > token.position.top + 70; // TODO: change 70 to default token size / 2
-    }, [token, tokenZoneRef]);
+        return height * 0.6 > token.position.top + appState.tokenSize / 2; // TODO: change 70 to default token size / 2
+    }, [token, tokenZoneRef, appState.tokenSize]);
 
     if (token === undefined) {
         return ( <></> );
@@ -59,6 +59,7 @@ export default function InfoBox() {
             <InfoReminders
                 focused={focus === Focus.REMINDERS}
                 focusCallback={() => setFocus(Focus.REMINDERS)}
+                onBottom={onBottom}
             ></InfoReminders>
             <InfoPowers
                 focused={focus === Focus.POWERS}
