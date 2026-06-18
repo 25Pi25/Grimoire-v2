@@ -77,9 +77,10 @@
 
 .Card__icon {
     position: absolute;
-    left: 25px;
-    width: 300px;
-    height: 300px;
+    left: 30px;
+    top: 5px;
+    width: 290px;
+    height: 290px;
 }
 
 .Card__extraIconsButton {
