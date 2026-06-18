@@ -55,10 +55,11 @@
 }
 
 /** The details tab */
+
 .InfoDetails__token {
+    position: absolute;
     width: 200px;
     height: 200px;
-    position: absolute;
     left: 25px;
     top: 50%;
     transform: translateY(-50%);
@@ -80,8 +81,9 @@
 
 .InfoDetails__tokenMask {
     position: absolute;
-    top: 0px;
     left: 25px;
+    top: 50%;
+    transform: translateY(-50%);
     height: 200px;
     width: 200px;
     pointer-events: none;
@@ -99,8 +101,9 @@
 
 .InfoDetails__visibilityIndicator {
     position: absolute;
-    top: 0px;
     left: 25px;
+    top: 50%;
+    transform: translateY(-50%);
     height: 200px;
     width: 200px;
     pointer-events: none;

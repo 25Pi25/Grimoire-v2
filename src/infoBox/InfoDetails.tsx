@@ -79,12 +79,12 @@ export default function InfoDetails({token, focused, focusCallback}: InfoDetails
             <SampleToken id={token.id} alignment={token.alignment} className="InfoDetails__token" onClick={focusCallback}></SampleToken>
             {mask}
             <span className="InfoDetails__tokenName">{name}</span>
-            <div className="InfoDetails__content">
-                <div className="InfoDetails__roleName">{role.name}</div>
-                <div className="InfoDetails__playerName">{name}</div>
-                <div className="InfoDetails__ability">{role.ability}</div>
-                {generateFlavor(role)}
-            </div>
+                <div className="InfoDetails__content">
+                    <div className="InfoDetails__roleName">{role.name}</div>
+                    <div className="InfoDetails__playerName">{name}</div>
+                    <div className="InfoDetails__ability">{role.ability}</div>
+                    {generateFlavor(role)}
+                </div>
         </div>
     )
 }
