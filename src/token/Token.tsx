@@ -45,7 +45,7 @@ export default function Token({ token, focused = false, className, onClick, titl
             title={title ? role.ability : undefined}
         >
             <Shading token={token} focused={focused} className={className}></Shading>
-            <div className={"TokenName__border"}></div>
+            <div className="TokenName__border" />
             <img className="Token__image General__backgroundImage" src={getImage(role, token)} alt={role.name} />
             <TokenName name={role.name} />
             <Shroud token={token} />
