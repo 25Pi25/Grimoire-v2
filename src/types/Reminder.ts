@@ -6,7 +6,8 @@ export type ReminderData = {
     id: string,
     text: string,
     ownerUid: number,
-    reminderUid: number
+    reminderUid: number,
+    flipped: boolean
 } & Position
 
 export function isReminderData(obj: any): obj is ReminderData {
@@ -15,6 +16,7 @@ export function isReminderData(obj: any): obj is ReminderData {
     if (typeof obj.text !== "string") return false;
     if (typeof obj.ownerUid !== "number") return false;
     if (typeof obj.reminderUid !== "number") return false;
+    if (typeof obj.flipped !== "boolean") obj.flipped = false; // TODO: this is for compatibility, if its unneeded then rewrite as a condition
 
     return isPosition(obj);
 }

@@ -16,6 +16,8 @@
     overflow: hidden;
     box-sizing: border-box;
     border-radius: 100%;
+    
+    transition: rotate 0.2s ease-in-out;
 }
 
 .Reminder__image {
@@ -53,4 +55,8 @@
     border-radius: 100%;
     user-select: none;
     opacity: 75%;
+}
+
+.Reminder__flipped {
+    rotate: 180deg;
 }

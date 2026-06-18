@@ -64,7 +64,28 @@ export default function ReminderZone() {
                 ...oldState,
                 promptedReminders: oldState.promptedReminders.filter(x => x !== reminder.reminderUid),
             }
-        })
+        });
+    }
+
+    function handleRightClick(e: any, index: number) {
+        if (!appState.tokenDataVisible) return;
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        setGameState(oldState => {
+            return {
+                ...oldState,
+                reminders: [
+                    ...oldState.reminders.slice(0, index),
+                    {
+                        ...oldState.reminders[index],
+                        flipped: !oldState.reminders[index].flipped
+                    },
+                    ...oldState.reminders.slice(index + 1)
+                ]
+            }
+        });
     }
 
     function handleDrop(index: number) {
@@ -81,15 +102,16 @@ export default function ReminderZone() {
     }
 
     const reminders = gameState.reminders.map((reminder, index) => (
-        <DraggableReminder 
+        <DraggableReminder
             key={reminder.reminderUid}
             className="Reminder__container"
             dragEnabled={appState.draggingEnabled}
-            reminder={reminder} 
+            reminder={reminder}
             promptDeletion={appState.promptedReminders.includes(reminder.reminderUid)}
-            onDrag={(e,ui) => handleDrag(e, ui, index)}
+            onDrag={(e, ui) => handleDrag(e, ui, index)}
             onDrop={() => handleDrop(index)}
             onClick={(e) => handleClick(e, index)}
+            onRightClick={(e) => handleRightClick(e, index)}
         />
     ));
 

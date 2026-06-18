@@ -25,7 +25,8 @@ export default function ReminderSpawner({roleId, text, top, left, ownerUid, clas
         top: top,
         left: left,
         ownerUid: 0,
-        reminderUid: 0
+        reminderUid: 0,
+        flipped: false
     }
 
     function onDrop(e: DraggableEvent, data: DraggableData) {
@@ -38,6 +39,7 @@ export default function ReminderSpawner({roleId, text, top, left, ownerUid, clas
             text: text,
             ownerUid,
             reminderUid: Date.now(),
+            flipped: false,
             ...spawnPos
         };
 

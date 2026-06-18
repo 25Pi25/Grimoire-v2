@@ -9,11 +9,12 @@ type ReminderType = {
     promptDeletion: boolean
     onDrag: (e: DraggableEvent, ui: DraggableData) => void;
     onClick: MouseEventHandler<HTMLElement>;
+    onRightClick?: MouseEventHandler<HTMLElement>;
     onDrop: DraggableEventHandler;
     className?: string,
 } 
 
-export default function DraggableReminder({ reminder, className, dragEnabled, promptDeletion, onDrag, onClick, onDrop}: ReminderType) {
+export default function DraggableReminder({ reminder, className, dragEnabled, promptDeletion, onDrag, onClick, onRightClick, onDrop}: ReminderType) {
 
     // Kludge to fix a reference error in Draggable 4.5.
     // https://github.com/react-grid-layout/react-draggable/issues/771#issuecomment-2545737391
@@ -70,7 +71,7 @@ export default function DraggableReminder({ reminder, className, dragEnabled, pr
             onDrag={handleTouchMove}
             onStop={handleTouchEnd}
         >
-            <div ref={ref} style={{zIndex: hasSufficientlyMoved() ? 1 : 0}}>
+            <div ref={ref} style={{zIndex: hasSufficientlyMoved() ? 1 : 0}} onContextMenu={(e) => onRightClick?.(e)}>
                 {innerReminder}
             </div>
         </Draggable>
