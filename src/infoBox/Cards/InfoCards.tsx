@@ -131,7 +131,7 @@ export default function InfoCards({focused, focusCallback}: InfoTabType) {
                 onClick={focusCallback}
                 role="button"
             >
-                <img className="InfoBox__tabImage" src="assets/list.png" alt=""></img>
+                <img className="InfoBox__tabImage" src="assets/list.png" alt="" draggable="false" />
             </div>
             <div className="InfoCards__content">
                 {cardJsx}

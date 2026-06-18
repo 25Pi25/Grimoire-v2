@@ -59,7 +59,7 @@ export default function AlignmentButton() {
             className="InfoPowers__option" 
             style={{backgroundColor}}
         >
-            <img className="AlignmentButton__image" style={{transform}} src="assets/thumbs-up.svg" alt="" />
+            <img className="AlignmentButton__image" style={{transform}} src="assets/thumbs-up.svg" alt="" draggable="false" />
         </div>
     )
 }

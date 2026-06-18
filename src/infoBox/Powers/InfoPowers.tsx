@@ -26,7 +26,7 @@ export default function InfoPowers({focused, focusCallback}: InfoTabType) {
                 onClick={focusCallback}
                 role="button"
             >
-                <img className="InfoBox__tabImage" src="assets/power.png" alt=""></img>
+                <img className="InfoBox__tabImage" src="assets/power.png" alt="" draggable="false" />
             </div>
             <div className="InfoPowers__content">
                 <SetName></SetName>
