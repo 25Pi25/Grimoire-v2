@@ -21,6 +21,8 @@ export default function ToggleDrag() {
         })
     }
 
+    if (!appState.tokenDataVisible) return <></>;
+    
     return (
         <div onClick={onToggle} 
              role="button"

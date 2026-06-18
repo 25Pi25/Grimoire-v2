@@ -33,7 +33,10 @@ export default function EditButton() {
         setAppState(oldState => {
             return {
                 ...oldState,
-                characterSelectCallback: editCallback
+                characterSelect: {
+                    type: "script",
+                    callback: editCallback
+                }
             }
         })
     }

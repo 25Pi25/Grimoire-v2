@@ -1,4 +1,4 @@
-import { createContext, Dispatch, SetStateAction } from "react";
+import { createContext, Dispatch, RefObject, SetStateAction } from "react";
 import { GameState } from "../types/GameState";
 import { AppState } from "./appState";
 import { RoleData } from "../types/Role";
@@ -56,4 +56,5 @@ export type GameContextType = {
     setRoles:  Dispatch<SetStateAction<RoleData>>,
     scripts: Script[],
     setScripts:  Dispatch<SetStateAction<Script[]>>,
+    tokenZoneRef: RefObject<HTMLDivElement | null>,
 };

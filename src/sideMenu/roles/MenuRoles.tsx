@@ -13,6 +13,7 @@ import { Team } from "../../types/Team";
 import { sortAlphabetical, sortSao } from "../../data/roleSorting";
 import { playerCounts, roleDistribution } from "../../data/teamData";
 import { getExpectedAlignment } from "../../types/Alignment";
+import MenuRoleOffscript from "./MenuRoleOffscript";
 
 /**
  * Construct the side menu's individual items using the given script.
@@ -60,7 +61,7 @@ function populateJSX(
     return items;
 }
 
-function aggregateJSX(gameState: GameState, roles: RoleData, elements: MapLike<JSX.Element[]>): JSX.Element[] {
+function aggregateJSX(gameState: GameState, roles: RoleData, elements: MapLike<JSX.Element[]>, callback: (id: string) => void): JSX.Element[] {
     const actual = playerCounts(gameState.playerTokens, roles);
     const [townsfolk, outsiders, minions] = roleDistribution(gameState.playerCount);
 
@@ -78,6 +79,7 @@ function aggregateJSX(gameState: GameState, roles: RoleData, elements: MapLike<J
         .map<JSX.Element>((team: Team) => (
             <TeamSection key={team} teamId={team} expectedCount={expected[team]} actualCount={actual[team]}>
                 {elements[team] ?? []}
+                <MenuRoleOffscript teamId={team} callback={callback} />
             </TeamSection>
         ));
 }
@@ -123,7 +125,7 @@ export default function MenuRoles() {
             () => populateJSX(gameState, roles, searchTerm, sortMethod, createToken),
             [gameState, roles, searchTerm, sortMethod, createToken]
     )
-    const sectionJSX = aggregateJSX(gameState, roles, roleJSX);
+    const sectionJSX = aggregateJSX(gameState, roles, roleJSX, createToken);
     
     return (
         <>

@@ -7,6 +7,7 @@ import { Role, RoleData } from "../types/Role";
 import { isRole, RoleIdentifier } from "../types/Script";
 import SampleToken from "../token/SampleToken";
 import { MapLike } from "typescript";
+import { Team } from "../types/Team";
 
 /**
  * Construct the token select menu's individual items using the given script.
@@ -15,17 +16,21 @@ import { MapLike } from "typescript";
  * @param callback What the individual menu items should do to create a new token
  * @returns 
  */
-function populateJSX(gameState: GameState, roles: RoleData, callback: (id: string) => void): MapLike<JSX.Element[]> {
+function populateJSX(gameState: GameState, roles: RoleData, callback: (id: string) => void, selectType: "script" | "offscript"): MapLike<JSX.Element[]> {
     const script = gameState.script.slice(1) as (RoleIdentifier | Role)[];
 
     const items: MapLike<JSX.Element[]> = {}
     Object.keys(TEAM_DATA).forEach(type => items[type] = []);
 
-    script.forEach(r => {
+    const roleScript = script.map(r => {
         if (!isRole(r, roles)) {
             r = roles[r.id];
         }
-        const role = r as Role;
+        return r as Role;
+    });
+
+    const selectRoles = selectType === "script" ? roleScript : Object.values(roles);
+    selectRoles.forEach(role => {
         if (!(role.team in items)) return;
         items[role.team].push((
             <SampleToken
@@ -47,7 +52,7 @@ function populateJSX(gameState: GameState, roles: RoleData, callback: (id: strin
  * @param elements A map mapping teams to the JSX elements made by the populateJSX function.
  * @returns 
  */
-function aggregateJSX(gameState: GameState, roles: RoleData, elements: MapLike<JSX.Element[]>): JSX.Element[] {
+function aggregateJSX(gameState: GameState, roles: RoleData, elements: MapLike<JSX.Element[]>, filterTeam?: Team): JSX.Element[] {
     const tokens = gameState.playerTokens;
 
     const teamCounts: MapLike<number> = {};
@@ -57,7 +62,9 @@ function aggregateJSX(gameState: GameState, roles: RoleData, elements: MapLike<J
         teamCounts[team] += 1;
     });
 
-    return Object.values(TEAM_DATA).filter(team => elements[team.id]?.length > 0).map<JSX.Element>(team => (
+    const visibleTeams = filterTeam ? [TEAM_DATA[filterTeam]]: Object.values(TEAM_DATA).filter(team => elements[team.id]?.length > 0);
+
+    return visibleTeams.map<JSX.Element>(team => (
         <div key={team.id}>
             <div className="CharacterSelect__teamHeader" style={{ color: team.color }}>{team.header}</div><br />
             <div id="mutate_menu_townsfolk">
@@ -75,24 +82,26 @@ function aggregateJSX(gameState: GameState, roles: RoleData, elements: MapLike<J
  */
 export default function CharacterSelect() {
     const { gameState, appState, setAppState, roles } = useContext(GameContext) as GameContextType;
-
-    if (appState.characterSelectCallback === undefined) {
+    
+    if (appState.characterSelect === undefined) {
         return <></>
     }
-    const onSelect = appState.characterSelectCallback!;
+    const onSelect = appState.characterSelect.callback!;
+    const selectType = appState.characterSelect.type;
+    const team = appState.characterSelect.team;
 
     function closeMenu(selection?: string) {
         if (selection !== undefined) onSelect(selection);
         setAppState(oldState => {
             return {
                 ...oldState,
-                characterSelectCallback: undefined
+                characterSelect: undefined
             }
         });
     }
 
-    const roleJSX = populateJSX(gameState, roles, closeMenu);
-    const sectionJSX = aggregateJSX(gameState, roles, roleJSX);
+    const roleJSX = populateJSX(gameState, roles, closeMenu, selectType);
+    const sectionJSX = aggregateJSX(gameState, roles, roleJSX, team);
 
 
     return (

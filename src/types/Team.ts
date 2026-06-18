@@ -9,7 +9,7 @@ export enum Team {
     Minion = "minion",
     
     /** Demons -- Evil players who don't want to die. */
-    Demon = 'demon',
+    Demon = "demon",
 
     /** Travellers -- Temporary players of either alignment */
     Traveller = "traveller",

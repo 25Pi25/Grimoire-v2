@@ -1,6 +1,7 @@
 import { createContext } from "react";
 import { Card } from "../types/Role";
 import { NightOrderTab } from "../nightOrder/TopButtons";
+import { Team } from '../types/Team';
 
 /**
  * The current Card. Is a Card, but includes data on which tokens are in the menu as well.
@@ -36,6 +37,9 @@ export type AppState = {
     /** The currently active card, if any. Null if no card is currently being shown. */
     activeCard?: ActiveCard,
 
+    /** The current size of each token, can be adjusted in the bottom button settings. */
+    tokenSize: number,
+
     /** Data about the dialog */
     dialog?: {
         message: string,
@@ -47,7 +51,11 @@ export type AppState = {
      * The callback to run in the mutate menu when any token is selected. 
      * Notably, The Mutate menu is only shown iff there is an action to do. 
      */
-    characterSelectCallback?: (id: string) => void
+    characterSelect?: {
+        type: "script" | "offscript",
+        team?: Team
+        callback: (id: string) => void
+    }
 }
 
 /**
@@ -62,7 +70,8 @@ export const DEFAULT_APP_STATE: AppState = Object.freeze({
     nightOrderData: {
         currentTab: NightOrderTab.None,
         openItems: []
-    }
+    },
+    tokenSize: 140,
 })
 
 export const AppContext = createContext(null);

@@ -42,7 +42,10 @@ export default function CardIcons() {
         setAppState(oldState => {
             return {
                 ...oldState,
-                characterSelectCallback: (id) => selectCallback(id, index)
+                characterSelect: {
+                    type: "script",
+                    callback: (id) => selectCallback(id, index)
+                }
             }
         });
     }

@@ -1,6 +1,7 @@
 import "./BottomButtons.css"
 import ToggleDrag from "./ToggleDrag";
 import ToggleVisibility from "./ToggleVisibility";
+import TokenAdjust from "./TokenAdjust";
 
 /**
  * Display the bottom buttons. These buttons are situated in a fixed spot
@@ -12,6 +13,7 @@ export default function BottomButtons() {
         <>
             <ToggleVisibility />
             <ToggleDrag />
+            <TokenAdjust />
         </>
     )
 }

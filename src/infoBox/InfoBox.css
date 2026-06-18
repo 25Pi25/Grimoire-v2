@@ -1,10 +1,17 @@
 .InfoBox__container {
     position: absolute;
     left: 0px;
-    bottom: 0px;
     width: 100%;
     height: 250px;
     white-space: nowrap;
+}
+
+.InfoBox__top {
+    top: 0px;
+}
+
+.InfoBox__bottom {
+    bottom: 0px;
 }
 
 .InfoBox__tab {
@@ -53,6 +60,9 @@
     height: 200px;
     position: absolute;
     left: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    vertical-align: center;
     overflow: hidden;
     background-repeat: no-repeat;
     background-size: cover;

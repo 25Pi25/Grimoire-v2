@@ -16,5 +16,5 @@ export default function Shading({token, focused, className}: ShadingType) {
     if (token.visibility === Visibility.Hidden) color = "red";
     if (token.visibility === Visibility.Bluff) color = "yellow";
 
-    return (<div className={outerClasses} style={{boxShadow: "0px 0px 5px 5px " + color}}></div>);
+    return (<div className={outerClasses} style={{boxShadow: "inset 0px 0px 5px 5px " + color}}></div>);
 }

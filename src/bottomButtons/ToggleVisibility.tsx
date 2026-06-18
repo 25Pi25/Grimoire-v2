@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { GameContext, GameContextType } from "../data/gameState";
 
 /**
@@ -12,9 +12,10 @@ import { GameContext, GameContextType } from "../data/gameState";
  * @returns 
  */
 export default function ToggleVisibility() {
-    const {appState, setAppState} = useContext(GameContext) as GameContextType;
+    const { appState, setAppState } = useContext(GameContext) as GameContextType;
+    const [hidden, setHidden] = useState<boolean>(false);
 
-    function onToggle() {
+    const onToggle = useCallback(() => {
         setAppState(oldState => {
             return {
                 ...oldState,
@@ -23,13 +24,23 @@ export default function ToggleVisibility() {
                 tokenDataVisible: !oldState.tokenDataVisible
             }
         });
-    }
+    }, [setAppState]);
 
+    useEffect(() => {
+        const event = (e: any) => {
+            if (e.key !== "h") return;
+            setHidden(h => !h);
+        };
+        window.addEventListener("keydown", event);
+        return () => window.removeEventListener("keydown", event);
+    }, [hidden]);
+
+    if (hidden) return <></>;
     return (
-        <div onClick={onToggle} 
-             role="button"
-             className="BottomButtons__button BottomButtons__visibilityToggle" 
-             style={{backgroundImage: 'url("/assets/visibility_off.png")', backgroundColor: (appState.tokenDataVisible ? "grey" : "lightblue")}}>
+        <div onClick={onToggle}
+            role="button"
+            className="BottomButtons__button BottomButtons__visibilityToggle"
+            style={{ backgroundImage: 'url("/assets/visibility_off.png")', backgroundColor: (appState.tokenDataVisible ? "grey" : "lightblue") }}>
         </div>
     )
 }

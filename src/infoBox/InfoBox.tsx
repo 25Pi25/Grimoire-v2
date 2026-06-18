@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { GameContext, GameContextType } from "../data/gameState";
 import "./InfoBox.css"
 import InfoDetails from "./InfoDetails";
@@ -30,17 +30,23 @@ export type InfoTabType = {
  */
 export default function InfoBox() {
 
-    const {gameState, appState} = useContext(GameContext) as GameContextType;
+    const {gameState, appState, tokenZoneRef} = useContext(GameContext) as GameContextType;
     const [focus, setFocus] = useState(Focus.DETAILS);
 
     const token = getToken(appState.activeTokenUid, gameState);
+    const onBottom = useMemo(() => {
+        if (!token || !tokenZoneRef.current) return false;
+        const height = tokenZoneRef.current.clientHeight;
+        return height * 0.6 > token.position.top + 70; // TODO: change 70 to default token size / 2
+    }, [token, tokenZoneRef]);
+
     if (token === undefined) {
         return ( <></> );
     }
 
-    
+    const alignment = onBottom ? "InfoBox__bottom" : "InfoBox__top";
     return (
-        <div className="InfoBox__container" style={{backgroundImage: "url('assets/vines.png')"}}>
+        <div className={"InfoBox__container " + alignment} style={{backgroundImage: "url('assets/vines.png')"}}>
             <InfoDetails 
                 token={token} 
                 focused={focus === Focus.DETAILS}

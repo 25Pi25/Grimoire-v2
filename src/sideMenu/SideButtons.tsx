@@ -28,14 +28,16 @@ function shuffleTokens(tokens: TokenData[], roles: RoleData): TokenData[] {
     }));
 }
 
-function spreadTokens(tokens: TokenData[], roles: RoleData): TokenData[] {
+function spreadTokens(tokenSize: number, tokens: TokenData[], roles: RoleData): TokenData[] {
+    const centerSize = tokenSize / 2;
     
     const center = { 
         y: document.documentElement.scrollHeight / 2, 
         x: document.documentElement.scrollWidth / 2,
     };
     
-    const radius = Math.min(center.y, center.x) - 150;
+    const total = tokens.length;
+    const radius = Math.min(center.y, center.x) - tokenSize - 50 + total * 5;
     if (radius < 0) return tokens;
 
 
@@ -44,25 +46,24 @@ function spreadTokens(tokens: TokenData[], roles: RoleData): TokenData[] {
         .filter(token => token.visibility === Visibility.Assigned)
         .filter(token => ![Team.Fabled, Team.Loric].includes(roles[token.id].team))
     
-    const total = tokens.length;
-    const angleSeperation = Math.PI * 2 / total;
+    const angleSeparation = Math.PI * 2 / total;
     
     const list = tokens.map((token, index) => {
         return {
-            angle: Math.atan2(token.position.top + 75 - center.y, token.position.left + 75 - center.x),
+            angle: Math.atan2(token.position.top + centerSize - center.y, token.position.left + centerSize - center.x),
             index,
             id: token.id
         };
     });
 
-
     const secondHalf = list.sort(({angle: a1}, {angle: a2}) => a2 - a1).map(({index}, i) => {
-        const angle = angleSeperation * (-(total - 1) / 2 + i);
+        const topIndex = Math.ceil((total - 1) * 3 / 4);
+        const angle = angleSeparation * (i - topIndex) - Math.PI / 2;
         return {
             ...tokens[index],
             position: {
-                top: center.y + radius * -Math.sin(angle) - 75,
-                left: center.x + radius * Math.cos(angle) - 75
+                top: center.y + radius * Math.sin(angle) - centerSize,
+                left: center.x + radius * -Math.cos(angle) - centerSize
             }
         }
     });
@@ -71,7 +72,7 @@ function spreadTokens(tokens: TokenData[], roles: RoleData): TokenData[] {
 }
 
 export default function SideButtons() {
-    const { setGameState, setAppState, roles } = useContext(GameContext) as GameContextType;
+    const { setGameState, appState, setAppState, roles } = useContext(GameContext) as GameContextType;
 
     function shuffle() {
         setGameState(oldState => {
@@ -87,7 +88,7 @@ export default function SideButtons() {
         setGameState(oldState => {
             return {
                 ...oldState,
-                playerTokens: spreadTokens(oldState.playerTokens, roles),
+                playerTokens: spreadTokens(appState.tokenSize, oldState.playerTokens, roles),
                 reminders: []
             }
         });
