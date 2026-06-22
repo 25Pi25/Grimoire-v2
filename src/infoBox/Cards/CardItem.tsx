@@ -5,7 +5,6 @@ import { distanceSquared, getToken } from "../../util";
 import { GameState } from "../../types/GameState";
 import { ActiveCard, AppState } from "../../data/appState";
 import { Visibility } from "../../types/Visibility";
-import { Alignment } from "../../types/Alignment";
 
 
 type CardItemType = {

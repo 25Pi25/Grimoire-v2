@@ -100,7 +100,7 @@
 }
 
 .SideButtons__clearAll {
-    background-size: 65%;
+    background-size: 80%;
     background-color: #ff0000c5;
     flex-grow: 1;
 }
@@ -112,6 +112,12 @@
 
 .SideButtons__spread {
     background-color: #78258d;
+    flex-grow: 1;
+}
+
+.SideButtons__bag {
+    background-size: 80%;
+    background-color: #5948c2;
     flex-grow: 1;
 }
 

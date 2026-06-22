@@ -57,6 +57,8 @@ export type AppState = {
         team?: Team
         callback: (id: string, alignment: Alignment) => void
     }
+
+    drawingBag: boolean
 }
 
 /**
@@ -73,6 +75,7 @@ export const DEFAULT_APP_STATE: AppState = Object.freeze({
         openItems: []
     },
     tokenSize: 140,
+    drawingBag: false,
 })
 
 export const AppContext = createContext(null);

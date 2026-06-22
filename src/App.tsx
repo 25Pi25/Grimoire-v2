@@ -16,6 +16,7 @@ import { Script } from './types/Script';
 import init from './data/init';
 import { saveLocalScripts } from './data/scriptData';
 import Dialog from './dialog/Dialog';
+import BagDraw from './bagDraw/BagDraw';
 
 function App() {
 
@@ -68,6 +69,7 @@ function App() {
             <Card />
             {appState.characterSelect && <CharacterSelect />}
             <Dialog />
+            {appState.drawingBag && <BagDraw />}
         </GameContext>
     );
 }

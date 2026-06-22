@@ -6,7 +6,7 @@ import { RoleData } from "../types/Role";
 import { Team } from "../types/Team";
 
 
-function shuffleTokens(tokens: TokenData[], roles: RoleData): TokenData[] {
+export function shuffleTokens(tokens: TokenData[], roles: RoleData): TokenData[] {
     const output = tokens
         .filter(token => token.visibility !== Visibility.Assigned || [Team.Fabled, Team.Loric].includes(roles[token.id].team))
     tokens = tokens
@@ -28,7 +28,7 @@ function shuffleTokens(tokens: TokenData[], roles: RoleData): TokenData[] {
     }));
 }
 
-function spreadTokens(tokenSize: number, tokens: TokenData[], roles: RoleData): TokenData[] {
+export function spreadTokens(tokenSize: number, tokens: TokenData[], roles: RoleData): TokenData[] {
     const centerSize = tokenSize / 2;
     
     const center = { 
@@ -55,6 +55,9 @@ function spreadTokens(tokenSize: number, tokens: TokenData[], roles: RoleData): 
             id: token.id
         };
     });
+    if (new Set(list.map(l => l.angle)).size === 1) {
+        console.log("yes")
+    }
 
     const secondHalf = list.sort(({angle: a1}, {angle: a2}) => a2 - a1).map(({index}, i) => {
         const topIndex = Math.ceil((total - 1) * 3 / 4);
@@ -113,9 +116,16 @@ export default function SideButtons() {
                     callback
                 }
             }
-        })
+        });        
+    }
 
-        
+    function bag() {
+        setAppState(oldState => {
+            return {
+                ...oldState,
+                drawingBag: true
+            }
+        });
     }
 
     return (
@@ -136,6 +146,12 @@ export default function SideButtons() {
                 className="SideButtons__button General__backgroundImage SideButtons__spread"
                 style={{backgroundImage: "url(assets/spread.svg)"}}
                 onClick={spread}
+                role="button"
+            ></div>
+            <div
+                className="SideButtons__button General__backgroundImage SideButtons__bag"
+                style={{backgroundImage: "url(assets/bag.svg)"}}
+                onClick={bag}
                 role="button"
             ></div>
         </div>
