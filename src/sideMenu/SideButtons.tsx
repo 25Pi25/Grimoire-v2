@@ -36,16 +36,15 @@ function spreadTokens(tokenSize: number, tokens: TokenData[], roles: RoleData): 
         x: document.documentElement.clientWidth / 2,
     };
     
-    const total = tokens.length;
     const BASE_RADIUS = tokenSize;
     const radius = (Math.min(center.y, center.x) - BASE_RADIUS - centerSize) * (Math.min(tokens.length, 15) / 15) + BASE_RADIUS
     if (radius < 0) return tokens;
 
-
     const firstHalf = tokens.filter(token => token.visibility !== Visibility.Assigned || [Team.Fabled, Team.Loric].includes(roles[token.id].team))
     tokens = tokens
         .filter(token => token.visibility === Visibility.Assigned)
-        .filter(token => ![Team.Fabled, Team.Loric].includes(roles[token.id].team))
+        .filter(token => ![Team.Fabled, Team.Loric].includes(roles[token.id].team));
+    const total = tokens.length;
     
     const angleSeparation = Math.PI * 2 / total;
     
