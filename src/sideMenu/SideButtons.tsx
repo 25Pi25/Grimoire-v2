@@ -79,8 +79,7 @@ export default function SideButtons() {
         setGameState(oldState => {
             return {
                 ...oldState,
-                playerTokens: shuffleTokens(oldState.playerTokens, roles),
-                reminders: []
+                playerTokens: shuffleTokens(oldState.playerTokens, roles)
             }
         });
     }
@@ -89,8 +88,7 @@ export default function SideButtons() {
         setGameState(oldState => {
             return {
                 ...oldState,
-                playerTokens: spreadTokens(appState.tokenSize, oldState.playerTokens, roles),
-                reminders: []
+                playerTokens: spreadTokens(appState.tokenSize, oldState.playerTokens, roles)
             }
         });
     }

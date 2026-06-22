@@ -66,7 +66,7 @@ function App() {
             <InfoBox />
             <BackgroundSelector />
             <Card />
-            <CharacterSelect />
+            {appState.characterSelect && <CharacterSelect />}
             <Dialog />
         </GameContext>
     );

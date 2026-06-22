@@ -1,10 +1,11 @@
 import { useContext } from "react";
 import { Team } from "../../types/Team";
 import { GameContext, GameContextType } from "../../data/gameState";
+import { Alignment } from "../../types/Alignment";
 
 type MenuRoleOffscriptType = {
     teamId: Team,
-    callback: (id: string) => void
+    callback: (id: string, alignment: Alignment) => void
 }
 
 export default function MenuRoleOffscript({teamId, callback}: MenuRoleOffscriptType) {

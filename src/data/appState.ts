@@ -1,7 +1,8 @@
 import { createContext } from "react";
 import { Card } from "../types/Role";
 import { NightOrderTab } from "../nightOrder/TopButtons";
-import { Team } from '../types/Team';
+import { Team } from "../types/Team";
+import { Alignment } from "../types/Alignment";
 
 /**
  * The current Card. Is a Card, but includes data on which tokens are in the menu as well.
@@ -54,7 +55,7 @@ export type AppState = {
     characterSelect?: {
         type: "script" | "offscript",
         team?: Team
-        callback: (id: string) => void
+        callback: (id: string, alignment: Alignment) => void
     }
 }
 

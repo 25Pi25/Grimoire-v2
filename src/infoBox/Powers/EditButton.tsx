@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { GameContext, GameContextType } from "../../data/gameState";
 import { getToken } from "../../util";
+import { Alignment } from "../../types/Alignment";
 
 /**
  * The edit button. When clicked, opens the Mutate menu and lets the
@@ -13,7 +14,7 @@ export default function EditButton() {
     const token = getToken(appState.activeTokenUid, gameState)!;
     const index = gameState.playerTokens.indexOf(token);
 
-    function editCallback(id: string) {
+    function editCallback(id: string, alignment: Alignment) {
         setGameState(oldState => {
             return {
                 ...oldState,
@@ -22,6 +23,7 @@ export default function EditButton() {
                     {
                         ...token,
                         id: id,
+                        alignment: alignment ?? token.alignment
                     },
                     ...oldState.playerTokens.slice(index+1)
                 ]

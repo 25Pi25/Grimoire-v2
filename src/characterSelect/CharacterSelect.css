@@ -8,10 +8,10 @@
 }
 
 .CharacterSelect__background {
-    height: 70%;
+    height: 90%;
     width: 100%;
     position: absolute;
-    top: calc(15% - 50px);
+    top: 5%;
     text-align: center;
     pointer-events: none;
 }
@@ -24,12 +24,23 @@
     background-color: #000000b7;
     border-radius: 100px;
     padding: 50px;
-    overflow-y: scroll;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    overflow-y: hidden;
     scrollbar-width: none;
 }
 
 .CharacterSelect__content::-webkit-scrollbar {
     display: none;
+}
+
+.CharacterSelect__box {
+    display: inline-block;
+    height: 80%;
+    pointer-events: all;
+    /* padding: 10px; */
+    overflow-y: scroll;
+    scrollbar-width: none;
 }
 
 
@@ -50,4 +61,23 @@
     position: relative;
     overflow: hidden;
     border-radius: 100%;
+}
+
+.CharacterSelect__buttons {
+    display: flex;
+    height: 20%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.CharacterSelect__button {
+    font-family: PiratesBay monospace;
+    font-size: x-large;
+    display: grid;
+    place-items: center;
+    height: 65px;
+    width: 20%;
+    background-color: gray;
+    border-radius: 10px;
+    cursor: pointer;
 }

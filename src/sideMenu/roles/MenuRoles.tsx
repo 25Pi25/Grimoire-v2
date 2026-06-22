@@ -12,7 +12,7 @@ import TeamSection from "./TeamSection";
 import { Team } from "../../types/Team";
 import { sortAlphabetical, sortSao } from "../../data/roleSorting";
 import { playerCounts, roleDistribution } from "../../data/teamData";
-import { getExpectedAlignment } from "../../types/Alignment";
+import { Alignment, getExpectedAlignment } from "../../types/Alignment";
 import MenuRoleOffscript from "./MenuRoleOffscript";
 
 /**
@@ -22,12 +22,12 @@ import MenuRoleOffscript from "./MenuRoleOffscript";
  * @returns 
  */
 function populateJSX(
-        gameState: GameState, 
-        roles: RoleData,
-        searchFilter: string,
-        sortMethod: (r1: Role, r2: Role) => number,
-        createCallback: (id: string) => void
-    ): MapLike<JSX.Element[]> {
+    gameState: GameState, 
+    roles: RoleData,
+    searchFilter: string,
+    sortMethod: (r1: Role, r2: Role) => number,
+    createCallback: (id: string, alignment: Alignment) => void
+): MapLike<JSX.Element[]> {
 
     const script = gameState.script.slice(1) as (RoleIdentifier | Role)[];
     const tokens = gameState.playerTokens;
@@ -61,7 +61,12 @@ function populateJSX(
     return items;
 }
 
-function aggregateJSX(gameState: GameState, roles: RoleData, elements: MapLike<JSX.Element[]>, callback: (id: string) => void): JSX.Element[] {
+function aggregateJSX(
+    gameState: GameState,
+    roles: RoleData,
+    elements: MapLike<JSX.Element[]>,
+    callback: (id: string) => void
+): JSX.Element[] {
     const actual = playerCounts(gameState.playerTokens, roles);
     const [townsfolk, outsiders, minions] = roleDistribution(gameState.playerCount);
 
@@ -99,7 +104,7 @@ export default function MenuRoles() {
         setSearchTerm(searchRef.current.value)
     }
 
-    const createToken = useCallback((id: string) => {
+    const createToken = useCallback((id: string, alignment?: Alignment) => {
         setGameState(prevState => {
             const newToken = {
                 id: id,
@@ -107,7 +112,7 @@ export default function MenuRoles() {
                 name: "",
                 visibility: Visibility.Assigned,
                 viability: Viability.Alive,
-                alignment: getExpectedAlignment(roles[id]),
+                alignment: alignment ?? getExpectedAlignment(roles[id]),
                 position: {
                     top: window.innerHeight / 2 - 75,
                     left: window.innerWidth / 2 - 75,

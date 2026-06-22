@@ -5,6 +5,7 @@ import { distanceSquared, getToken } from "../../util";
 import { GameState } from "../../types/GameState";
 import { ActiveCard, AppState } from "../../data/appState";
 import { Visibility } from "../../types/Visibility";
+import { Alignment } from "../../types/Alignment";
 
 
 type CardItemType = {
@@ -41,13 +42,16 @@ function completeCard(card: Card, appState: AppState, gameState: GameState, role
 
     for (let i = shownIcons.length; i < (card.icons ?? 0); i++) {
         let iconId: string | undefined;
+        // let iconAlignment: Alignment | undefined;
         if (i === 0 && card.autofill !== undefined && !card.autofill!.startsWith("_")) {
             iconId = card.autofill;
         }
         if (card.autofill === "_self") {
             iconId = token.id;
+            // iconAlignment = token.alignment;
         }
         shownIcons.push(iconId);
+        // TODO: add alignment to shown icons and cards
     }
 
     return {
