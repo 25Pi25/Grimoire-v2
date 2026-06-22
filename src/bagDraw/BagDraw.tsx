@@ -66,8 +66,14 @@ export default function Card() {
     if (tokenQueue.length) return <div className="Card__container" style={{ backgroundImage: "url(assets/background-img2.webp)" }}>
         <div className="Card__content">
             <form onSubmit={e => { e.preventDefault(); handleClick(); }}>
+                <div className="Card__iconsContainer">
+                    <div className="Card__iconContainer BagDraw__iconContainer" style={{ backgroundImage: " url(assets/question-mark.svg)" }}>
+                        {reveal && <SampleToken id={currentRole.id} className="Card__icon General__backgroundImage" />}
+                        {/* <span className="Card__title BagDraw__subtitle">{reveal ? currentRole.ability : "???"}</span> */}
+                    </div>
+                </div>
                 <div className="BagDraw__title">
-                    <p className="Card__title">P{tokenDoneQueue.length + 1}'s Name:</p>
+                    <p className="Card__title">Name {tokenDoneQueue.length + 1}:</p>
                     <input
                         autoComplete="off"
                         type="text"
@@ -76,12 +82,6 @@ export default function Card() {
                         onChange={e => setName(e.target.value)} // TODO: surely there's a better way to capture an input change
                     />
                 </div>
-                <div className="Card__iconsContainer">
-                    <div className="Card__iconContainer" style={{ backgroundImage: " url(assets/question-mark.svg)" }}>
-                        {reveal && <SampleToken id={currentRole.id} className="Card__icon General__backgroundImage" />}
-                    </div>
-                </div>
-                <p className="Card__title BagDraw__subtitle">{reveal ? currentRole.ability : ""}</p>
                 <div className="CharacterSelect__button BagDraw__button" onClick={handleClick}>
                     <span>{!name ? "Enter your name!" : reveal ? "Next Player" : "Reveal"}</span>
                 </div>
@@ -90,13 +90,11 @@ export default function Card() {
     </div>
 
     return <div className="Card__container" style={{ backgroundImage: "url(assets/background-img2.webp)" }}>
-        <form onSubmit={e => {e.preventDefault(); setStoryteller(false)}}>
-            <div className="Card__content">
-                <span className="Card__title">Hand the device to the Storyteller.</span>
-                <div className="CharacterSelect__button BagDraw__button" onClick={() => setStoryteller(false)}>
-                    <span>All done!</span>
-                </div>
+        <div className="Card__content">
+            <span className="Card__title">Hand the device to the Storyteller.</span>
+            <div className="CharacterSelect__button BagDraw__button" onClick={() => setStoryteller(false)}>
+                <span>All done!</span>
             </div>
-        </form>
+        </div>
     </div>
 }
