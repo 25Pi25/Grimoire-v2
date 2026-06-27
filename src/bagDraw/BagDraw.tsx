@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import "./BagDraw.css";
 import { GameContext, GameContextType } from "../data/gameState";
 import { TokenData } from "../types/TokenData";
@@ -20,81 +20,121 @@ function shuffle<T>(arr: T[]): T[] {
 }
 
 export default function Card() {
-    const { gameState, setGameState, appState, setAppState, roles } = useContext(GameContext) as GameContextType;
-    const [tokenQueue, setTokenQueue] = useState<TokenData[]>(shuffle(gameState.playerTokens.filter(token => canShuffle(token, roles))));
-    const [tokenDoneQueue, setTokenDoneQueue] = useState<[TokenData, string][]>([]);
-    const [reveal, setReveal] = useState<boolean>(false);
+    const {gameState, setGameState, appState, setAppState, roles} = useContext(GameContext) as GameContextType;
+    const [tokenList, setTokenList] = useState<[TokenData, string | null][]>(
+        shuffle(gameState.playerTokens.filter(token => canShuffle(token, roles))).map(x => [x, null])
+    );
+    const [tokenOrder, setTokenOrder] = useState<number[]>([]);
+    const [tokenIndex, setTokenIndex] = useState<number | null>(null);
     const [name, setName] = useState<string>("");
     const [storyteller, setStoryteller] = useState(true);
 
+    const amountComplete = useMemo(() => tokenList.reduce((a, [_, name]) => a + (name !== null ? 1 : 0), 0), [tokenList]);
+    const tokensComplete = useMemo(() => tokenList.length === amountComplete, [tokenList, amountComplete]);
+    const currentRole = useMemo(() => tokenIndex === null ? null : tokenList[tokenIndex][0], [tokenList, tokenIndex]);
+
     useEffect(() => {
-        if (tokenQueue.length) return;
+        if (!tokensComplete) return;
         if (storyteller) return;
         // finish distribution of tokens
-        const tokenBreakPoint = Math.floor((tokenDoneQueue.length - 1) * 1 / 4);
-        const newQueue = [...tokenDoneQueue.slice(tokenBreakPoint), ...tokenDoneQueue.slice(0, tokenBreakPoint)];
-        console.log(newQueue.map(x => x[1]))
+        const tokenBreakPoint = Math.floor((tokenList.length - 1) * 1 / 4);
+        const reorderedList = tokenOrder.map(order => tokenList[order]);
+        const finalList = [...reorderedList.slice(tokenBreakPoint), ...reorderedList.slice(0, tokenBreakPoint)];
         setGameState(oldState => {
             return {
                 ...oldState,
                 playerTokens: spreadTokens(appState.tokenSize, [
                     ...oldState.playerTokens.filter(t => !canShuffle(t, roles)),
-                    ...newQueue.map(t => ({ ...t[0], name: t[1], position: { left: 0, top: 0 } }))
+                    ...finalList.map(t => ({ ...t[0], name: t[1] as string, position: { left: 0, top: 0 } }))
                 ], roles)
             }
         });
         setAppState(oldState => ({ ...oldState, drawingBag: false }));
         // TODO: method of sorting may be unstable, may have to find another way to sort this properly
-    }, [tokenQueue, tokenDoneQueue, gameState.playerTokens, roles, setAppState, setGameState, appState.tokenSize, storyteller]);
+    }, [tokenList, tokenOrder, tokensComplete, gameState.playerTokens, roles, setAppState, setGameState, appState.tokenSize, storyteller]);
 
     if (!appState.drawingBag) return <></>;
-    if (!tokenQueue[0] && !storyteller) return <></>;
-
-    const currentRole = roles[tokenQueue[0]?.id];
+    if (tokensComplete && !storyteller) return <></>;
 
     function handleClick() {
         if (!name) return;
-        setReveal(r => !r);
-        if (!reveal) return;
-        setTokenQueue([...tokenQueue.slice(1)]);
-        setTokenDoneQueue([[tokenQueue[0], name], ...tokenDoneQueue]);
+        setTokenList(oldList => oldList.map((token, index) => index === tokenIndex ? [token[0], name] : token));
+        setTokenOrder(oldOrder => [tokenIndex!, ...oldOrder]);
+        setTokenIndex(null);
         setName("");
     }
 
+    function handleTokenClick(index: number) {
+        setTokenIndex(index);
+    }
 
+    function closeMenu() {
+        setAppState(oldState => ({ ...oldState, drawingBag: false }));
+    }
 
-    if (tokenQueue.length) return <div className="Card__container" style={{ backgroundImage: "url(assets/background-img2.webp)" }}>
-        <div className="Card__content">
-            <form onSubmit={e => { e.preventDefault(); handleClick(); }}>
-                <div className="Card__iconsContainer">
-                    <div className="Card__iconContainer BagDraw__iconContainer" style={{ backgroundImage: " url(assets/question-mark.svg)" }}>
-                        {reveal && <SampleToken id={currentRole.id} className="Card__icon General__backgroundImage" />}
-                        {/* <span className="Card__title BagDraw__subtitle">{reveal ? currentRole.ability : "???"}</span> */}
-                    </div>
-                </div>
-                <div className="BagDraw__title">
-                    <p className="Card__title">Name {tokenDoneQueue.length + 1}:</p>
-                    <input
-                        autoComplete="off"
-                        type="text"
-                        className="InfoPowers__nameInput BagDraw__nameInput"
-                        value={name}
-                        onChange={e => setName(e.target.value)} // TODO: surely there's a better way to capture an input change
-                    />
-                </div>
-                <div className="CharacterSelect__button BagDraw__button" onClick={handleClick}>
-                    <span>{!name ? "Enter your name!" : reveal ? "Next Player" : "Reveal"}</span>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    return <div className="Card__container" style={{ backgroundImage: "url(assets/background-img2.webp)" }}>
+    if (tokensComplete) return <div className="Card__container" style={{ backgroundImage: "url(assets/background-img2.webp)" }}>
+        <div 
+            className="Card__closeButton General__backgroundImage" 
+            onClick={closeMenu}
+            role="button"
+            style={{backgroundImage: 'url("assets/close.png")'}}
+        ></div>
         <div className="Card__content">
             <span className="Card__title">Hand the device to the Storyteller.</span>
             <div className="CharacterSelect__button BagDraw__button" onClick={() => setStoryteller(false)}>
                 <span>All done!</span>
             </div>
+        </div>
+    </div>
+
+    if (!currentRole) return <div className="Card__container" style={{ backgroundImage: "url(assets/background-img2.webp)" }}>
+        <div 
+            className="Card__closeButton General__backgroundImage" 
+            onClick={closeMenu}
+            role="button"
+            style={{backgroundImage: 'url("assets/close.png")'}}
+        ></div>
+        <div className="Card__content">
+            <div className="Card__iconsContainer BagDraw__tokensContainer">
+                {tokenList.map(([_, name], index) =>
+                    name ? <div className="Card__iconContainer BagDraw__tokenContainer" key={index}></div> :
+                    <div className="Card__iconContainer BagDraw__tokenContainer" key={index}
+                        style={{ backgroundImage: " url(assets/alive_token.png)" }} onClick={name ? () => {} : () => handleTokenClick(index)}>
+                        <p className="Card__title BagDraw__subtitle">{index + 1}</p>
+                    </div>)
+                }
+            </div>
+        </div>
+    </div>
+
+    return <div className="Card__container" style={{ backgroundImage: "url(assets/background-img2.webp)" }}>
+        <div 
+            className="Card__closeButton General__backgroundImage" 
+            onClick={closeMenu}
+            role="button"
+            style={{backgroundImage: 'url("assets/close.png")'}}
+        ></div>
+        <div className="Card__content">
+            <form onSubmit={e => { e.preventDefault(); handleClick(); }}>
+                <div className="Card__iconsContainer">
+                    <div className="Card__iconContainer BagDraw__iconContainer">
+                        <SampleToken id={currentRole.id} className="Card__icon General__backgroundImage" />
+                    </div>
+                </div>
+                <div className="BagDraw__title">
+                    <p className="Card__title">Name {amountComplete + 1}:</p>
+                    <input
+                        autoComplete="off"
+                        type="text"
+                        className="InfoPowers__nameInput BagDraw__nameInput"
+                        value={name}
+                        onChange={e => setName(e.target.value)}
+                    />
+                </div>
+                <div className="CharacterSelect__button BagDraw__button" onClick={handleClick}>
+                    <span>{!name ? "Enter your name!" : "Next Player"}</span>
+                </div>
+            </form>
         </div>
     </div>
 }

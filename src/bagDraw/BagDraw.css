@@ -24,13 +24,23 @@
     margin: 30px;
 }
 
+.BagDraw__tokensContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.BagDraw__tokenContainer {
+    width: 225px;
+    height: auto;
+    aspect-ratio: 1/1;
+}
+
 .Card__title.BagDraw__subtitle {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 30pt;
-    color: gray;
+    font-size: 50pt;
+    color: black;
     margin: auto;
-    overflow: hidden;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 210px;
 }
