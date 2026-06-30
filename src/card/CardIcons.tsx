@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { GameContext, GameContextType } from "../data/gameState";
 import SampleToken from "../token/SampleToken";
+import { Alignment } from "../types/Alignment";
 
 
 export default function CardIcons() {
@@ -21,7 +22,7 @@ export default function CardIcons() {
         });
     }
 
-    function selectCallback(id: string, index: number) {
+    function selectCallback(id: string, alignment: Alignment | undefined, index: number) {
         setAppState(oldState => {
             const oldIcons = oldState.activeCard!.shownIcons;
             return {
@@ -30,7 +31,7 @@ export default function CardIcons() {
                     ...oldState.activeCard!,
                     shownIcons: [
                         ...oldIcons.slice(0,index),
-                        id,
+                        [id, alignment],
                         ...oldIcons.slice(index+1)
                     ]
                 }
@@ -44,7 +45,7 @@ export default function CardIcons() {
                 ...oldState,
                 characterSelect: {
                     type: "script",
-                    callback: (id) => selectCallback(id, index)
+                    callback: (id, alignment) => selectCallback(id, alignment, index)
                 }
             }
         });
@@ -52,9 +53,12 @@ export default function CardIcons() {
 
     const icons = appState.activeCard!.shownIcons;
 
-    const iconJsx = icons.map((id, index) => {
+    const iconJsx = icons.map((cardData, index) => {
         let token = <></>
-        if (id !== undefined) token = <SampleToken id={id} className="Card__icon General__backgroundImage" />;
+        if (cardData !== undefined) {
+            const [id, alignment] = cardData;
+            token = <SampleToken id={id} alignment={alignment} className="Card__icon General__backgroundImage" />;
+        }
         return (
             <div key={index} className="Card__iconContainer" style={{backgroundImage:" url(assets/person_add.png)"}} onClick={() => changeIcon(index)}>
                 {token}

@@ -5,6 +5,7 @@ import { distanceSquared, getToken } from "../../util";
 import { GameState } from "../../types/GameState";
 import { ActiveCard, AppState } from "../../data/appState";
 import { Visibility } from "../../types/Visibility";
+import { Alignment } from "../../types/Alignment";
 
 
 type CardItemType = {
@@ -28,7 +29,7 @@ function completeCard(card: Card, appState: AppState, gameState: GameState, role
         newCard.title += roles[token.id].ability
     }
 
-    const shownIcons: (string | undefined)[] = [];
+    const shownIcons: ([string, Alignment | undefined] | undefined)[] = [];
     if (card.autofill === "_bluff") {
         const bluffs = gameState.playerTokens.filter(token => token.visibility === Visibility.Bluff);
         const nearestBluff = token// bluffs.sort((a,b) => distanceSquared(a.position, token.position) - distanceSquared(b.position, token.position))[0];
@@ -36,20 +37,23 @@ function completeCard(card: Card, appState: AppState, gameState: GameState, role
             .sort((a,b) => distanceSquared(a.position, nearestBluff.position) - distanceSquared(b.position, nearestBluff.position))
             .map(token => token.id)
             .slice(0,3)
-            .forEach(id => shownIcons.push(id));
+            .forEach(id => shownIcons.push([id, undefined]));
     }
 
     for (let i = shownIcons.length; i < (card.icons ?? 0); i++) {
         let iconId: string | undefined;
-        // let iconAlignment: Alignment | undefined;
+        let iconAlignment: Alignment | undefined;
         if (i === 0 && card.autofill !== undefined && !card.autofill!.startsWith("_")) {
             iconId = card.autofill;
         }
         if (card.autofill === "_self") {
             iconId = token.id;
-            // iconAlignment = token.alignment;
         }
-        shownIcons.push(iconId);
+        if (card.autofill === "_selfAlignment") {
+            iconId = token.id;
+            iconAlignment = token.alignment;
+        }
+        shownIcons.push(iconId === undefined ? iconId : [iconId, iconAlignment]);
         // TODO: add alignment to shown icons and cards
     }
 

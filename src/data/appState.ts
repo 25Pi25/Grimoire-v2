@@ -8,7 +8,7 @@ import { Alignment } from "../types/Alignment";
  * The current Card. Is a Card, but includes data on which tokens are in the menu as well.
  */
 export type ActiveCard = Card & {
-    shownIcons: (string | undefined)[]
+    shownIcons: ([string, Alignment | undefined] | undefined)[]
 }
 
 /**

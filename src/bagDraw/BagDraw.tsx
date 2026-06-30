@@ -99,7 +99,7 @@ export default function Card() {
                 {tokenList.map(([_, name], index) =>
                     name ? <div className="Card__iconContainer BagDraw__tokenContainer" key={index}></div> :
                     <div className="Card__iconContainer BagDraw__tokenContainer" key={index}
-                        style={{ backgroundImage: " url(assets/alive_token.png)" }} onClick={name ? () => {} : () => handleTokenClick(index)}>
+                        style={{ backgroundImage: "url(assets/alive_token.png)" }} onClick={name ? () => {} : () => handleTokenClick(index)}>
                         <p className="Card__title BagDraw__subtitle">{index + 1}</p>
                     </div>)
                 }
