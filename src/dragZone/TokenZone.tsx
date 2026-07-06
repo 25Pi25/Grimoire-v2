@@ -77,33 +77,6 @@ export default function TokenZone() {
         });
     }
 
-    useEffect(() => {
-        const event = (e: any) => {
-            if (e.key !== "Delete") return;
-            if (appState.activeTokenUid === -1) return;
-            const token = getToken(appState.activeTokenUid, gameState)!;
-            const index = gameState.playerTokens.indexOf(token);
-            setGameState(oldGameState => {
-                return {
-                    ...oldGameState,
-                    playerTokens: [
-                        ...oldGameState.playerTokens.slice(0, index),
-                        ...oldGameState.playerTokens.slice(index + 1)
-                    ],
-                    reminders: oldGameState.reminders.filter(r => r.ownerUid !== appState.activeTokenUid)
-                };
-            })
-            setAppState(oldState => {
-                return {
-                    ...oldState,
-                    activeTokenUid: -1
-                }
-            })
-        }
-        window.addEventListener("keydown", event)
-        return () => window.removeEventListener("keydown", event)
-    }, [appState, setAppState, gameState, setGameState])
-
     const tokens = gameState.playerTokens.map((token, index) => (
         <DraggableToken
             key={token.uid}

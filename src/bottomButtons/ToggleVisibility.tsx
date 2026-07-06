@@ -26,15 +26,6 @@ export default function ToggleVisibility() {
         });
     }, [setAppState]);
 
-    useEffect(() => {
-        const event = (e: any) => {
-            if (e.key !== "h") return;
-            setHidden(h => !h);
-        };
-        window.addEventListener("keydown", event);
-        return () => window.removeEventListener("keydown", event);
-    }, [hidden]);
-
     if (hidden) return <></>;
     return (
         <div onClick={onToggle}
