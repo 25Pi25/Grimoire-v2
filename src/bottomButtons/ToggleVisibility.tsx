@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext } from "react";
 import { GameContext, GameContextType } from "../data/gameState";
 
 /**
@@ -13,7 +13,6 @@ import { GameContext, GameContextType } from "../data/gameState";
  */
 export default function ToggleVisibility() {
     const { appState, setAppState } = useContext(GameContext) as GameContextType;
-    const [hidden, setHidden] = useState<boolean>(false);
 
     const onToggle = useCallback(() => {
         setAppState(oldState => {
@@ -26,7 +25,6 @@ export default function ToggleVisibility() {
         });
     }, [setAppState]);
 
-    if (hidden) return <></>;
     return (
         <div onClick={onToggle}
             role="button"

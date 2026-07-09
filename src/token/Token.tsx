@@ -39,7 +39,8 @@ export default function Token({ token, focused = false, className, onClick, titl
                 backgroundImage: `url(/assets/token-DRfx6YVD.webp)`,
                 backgroundSize: "113% auto",
                 backgroundPosition: "50% 50%",
-                borderRadius: "50%"
+                borderRadius: "50%",
+                containerType: "inline-size"
             }}
             onClick={() => onClick?.()}
             title={title ? role.ability : undefined}

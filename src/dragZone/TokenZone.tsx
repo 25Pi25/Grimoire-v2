@@ -1,11 +1,10 @@
-import { CSSProperties, useContext, useEffect } from "react";
+import { CSSProperties, useContext } from "react";
 import { DraggableEvent, DraggableData } from "react-draggable";
 import { GameContext, GameContextType } from "../data/gameState";
 import DraggableToken from "../token/DraggableToken";
 import { GameState } from "../types/GameState";
 import { nextViability } from "../types/Viability";
 import { isStorytellerToken } from "../data/teamData";
-import { getToken } from '../util';
 
 /**
  * Provides a div containing the "token Zone", a region where all role tokens exist. 
