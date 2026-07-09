@@ -51,7 +51,7 @@
     border: 1.5cqw solid black;
     left: -1.5cqw;
     top: -1.5cqw;
-    box-shadow: 0px 0px 0.35cqw 0.35cqw black, inset 0px 0px 0.35cqw 0.35cqw black;
+    box-shadow: 0px 0px 0.25cqw 0.25cqw black, inset 0px 0px 0.25cqw 0.25cqw black;
 }
 
 .TokenName__text {

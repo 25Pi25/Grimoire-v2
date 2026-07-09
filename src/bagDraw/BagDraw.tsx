@@ -57,7 +57,7 @@ export default function Card() {
     if (tokensComplete && !storyteller) return <></>;
 
     function handleClick() {
-        if (!name) return;
+        // if (!name) return; // name required
         setTokenList(oldList => oldList.map((token, index) => index === tokenIndex ? [token[0], name] : token));
         setTokenOrder(oldOrder => [tokenIndex!, ...oldOrder]);
         setTokenIndex(null);
