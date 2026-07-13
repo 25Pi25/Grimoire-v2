@@ -80,7 +80,7 @@ export default function TokenZone() {
         <DraggableToken
             key={token.uid}
             focused={appState.activeTokenUid === token.uid}
-            dragEnabled={appState.draggingEnabled}
+            dragEnabled={appState.tokenDraggingEnabled}
             isDataVisible={appState.tokenDataVisible}
             token={token}
             onDrag={(e, ui) => handleDrag(e, ui, index)}
@@ -89,7 +89,7 @@ export default function TokenZone() {
         />
     ));
 
-    const style = { "--token-size": `${appState.tokenSize}px`} as CSSProperties;
+    const style = { "--token-size": `${gameState.tokenSize}px`} as CSSProperties;
 
     return (
         <div ref={tokenZoneRef} className="DragZone__container" style={style}>

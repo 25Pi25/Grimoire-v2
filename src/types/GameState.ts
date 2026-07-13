@@ -12,7 +12,8 @@ export type GameState = {
     reminders: ReminderData[],
     script: Script
     scriptColor: string,
-    scriptId: number
+    scriptId: number,
+    tokenSize: number
 }
 
 export function isValidGamestate(obj: any): obj is GameState {
@@ -33,6 +34,8 @@ export function isValidGamestate(obj: any): obj is GameState {
     
     if (typeof obj.scriptColor !== "string") return false;
     if (typeof obj.scriptId !== "number") return false;
-
+    
+    if (typeof obj.tokenSize !== "number") return false;
+    
     return true;
 }

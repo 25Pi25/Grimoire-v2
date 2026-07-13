@@ -43,7 +43,7 @@ export default function Card() {
         setGameState(oldState => {
             return {
                 ...oldState,
-                playerTokens: spreadTokens(appState.tokenSize, [
+                playerTokens: spreadTokens(gameState.tokenSize, [
                     ...oldState.playerTokens.filter(t => !canShuffle(t, roles)),
                     ...finalList.map(t => ({ ...t[0], name: t[1] as string, position: { left: 0, top: 0 } }))
                 ], roles)
@@ -51,7 +51,7 @@ export default function Card() {
         });
         setAppState(oldState => ({ ...oldState, drawingBag: false }));
         // TODO: method of sorting may be unstable, may have to find another way to sort this properly
-    }, [tokenList, tokenOrder, tokensComplete, gameState.playerTokens, roles, setAppState, setGameState, appState.tokenSize, storyteller]);
+    }, [tokenList, tokenOrder, tokensComplete, gameState.playerTokens, roles, setAppState, setGameState, gameState.tokenSize, storyteller]);
 
     if (!appState.drawingBag) return <></>;
     if (tokensComplete && !storyteller) return <></>;

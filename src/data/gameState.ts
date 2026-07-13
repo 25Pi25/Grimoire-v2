@@ -9,26 +9,27 @@ import { Script } from "../types/Script";
  * @returns The game state saved in storage, or a generic simple one otherwise.
  */
 export function load(): GameState {
-    if (localStorage.getItem("state") == null) {
-        return {
-            background: "url(assets/backgrounds/red_troublebrewing_logo.webp)",
-            isNight: false,
-            orientation: "landscape",
-            playerCount: 12,
-            playerTokens: [],
-            reminders: [],
-            script: [
-                {
-                    id: "_meta",
-                    name: "Select a Script",
-                    author: ""
-                }
-            ],
-            scriptColor: "blue",
-            scriptId: 0
-        }
-    }
-    return JSON.parse(localStorage.getItem("state")!) as GameState;
+    const defaults: GameState = {
+        background: "url(assets/backgrounds/red_troublebrewing_logo.webp)",
+        isNight: false,
+        orientation: "landscape",
+        playerCount: 12,
+        playerTokens: [],
+        reminders: [],
+        script: [
+            {
+                id: "_meta",
+                name: "Select a Script",
+                author: ""
+            }
+        ],
+        scriptColor: "blue",
+        scriptId: 0,
+        tokenSize: 140
+    };
+    
+    if (localStorage.getItem("state") === null) return defaults;
+    return { ...defaults, ...(JSON.parse(localStorage.getItem("state")!) as GameState) };
 }
 
 /**
