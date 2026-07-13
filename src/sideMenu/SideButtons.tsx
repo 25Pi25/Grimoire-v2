@@ -55,9 +55,6 @@ export function spreadTokens(tokenSize: number, tokens: TokenData[], roles: Role
             id: token.id
         };
     });
-    if (new Set(list.map(l => l.angle)).size === 1) {
-        console.log("yes")
-    }
 
     const secondHalf = list.sort(({angle: a1}, {angle: a2}) => a2 - a1).map(({index}, i) => {
         const topIndex = Math.ceil((total - 1) * 3 / 4);
@@ -75,7 +72,7 @@ export function spreadTokens(tokenSize: number, tokens: TokenData[], roles: Role
 }
 
 export default function SideButtons() {
-    const { setGameState, appState, setAppState, roles } = useContext(GameContext) as GameContextType;
+    const { setGameState, setAppState, roles } = useContext(GameContext) as GameContextType;
 
     function shuffle() {
         setGameState(oldState => {
@@ -90,7 +87,7 @@ export default function SideButtons() {
         setGameState(oldState => {
             return {
                 ...oldState,
-                playerTokens: spreadTokens(appState.tokenSize, oldState.playerTokens, roles)
+                playerTokens: spreadTokens(oldState.tokenSize, oldState.playerTokens, roles)
             }
         });
     }

@@ -18,8 +18,11 @@ export type AppState = {
     /** The UID of the token that is being shown via the Info Box, */
     activeTokenUid: number,
 
-    /** Whether dragging is enabled. */
-    draggingEnabled: boolean,
+    /** Whether token dragging is enabled. */
+    tokenDraggingEnabled: boolean,
+
+    /** Whether reminder token dragging is enabled. */
+    reminderDraggingEnabled: boolean,
 
     /** Whether the background selector UI is shown. */
     isBackgroundSelectorOpen: boolean
@@ -37,9 +40,6 @@ export type AppState = {
 
     /** The currently active card, if any. Null if no card is currently being shown. */
     activeCard?: ActiveCard,
-
-    /** The current size of each token, can be adjusted in the bottom button settings. */
-    tokenSize: number,
 
     /** Data about the dialog */
     dialog?: {
@@ -66,7 +66,8 @@ export type AppState = {
  */
 export const DEFAULT_APP_STATE: AppState = Object.freeze({
     activeTokenUid: -1,
-    draggingEnabled: true,
+    tokenDraggingEnabled: true,
+    reminderDraggingEnabled: true,
     isBackgroundSelectorOpen: false,
     promptedReminders: [],
     tokenDataVisible: true,
@@ -74,7 +75,6 @@ export const DEFAULT_APP_STATE: AppState = Object.freeze({
         currentTab: NightOrderTab.None,
         openItems: []
     },
-    tokenSize: 140,
     drawingBag: false,
 })
 
