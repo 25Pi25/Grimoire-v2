@@ -105,7 +105,7 @@ export default function ReminderZone() {
         <DraggableReminder
             key={reminder.reminderUid}
             className="Reminder__container"
-            dragEnabled={appState.draggingEnabled}
+            dragEnabled={appState.reminderDraggingEnabled}
             reminder={reminder}
             promptDeletion={appState.promptedReminders.includes(reminder.reminderUid)}
             onDrag={(e, ui) => handleDrag(e, ui, index)}

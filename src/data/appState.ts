@@ -18,8 +18,11 @@ export type AppState = {
     /** The UID of the token that is being shown via the Info Box, */
     activeTokenUid: number,
 
-    /** Whether dragging is enabled. */
-    draggingEnabled: boolean,
+    /** Whether token dragging is enabled. */
+    tokenDraggingEnabled: boolean,
+
+    /** Whether reminder token dragging is enabled. */
+    reminderDraggingEnabled: boolean,
 
     /** Whether the background selector UI is shown. */
     isBackgroundSelectorOpen: boolean
@@ -66,7 +69,8 @@ export type AppState = {
  */
 export const DEFAULT_APP_STATE: AppState = Object.freeze({
     activeTokenUid: -1,
-    draggingEnabled: true,
+    tokenDraggingEnabled: true,
+    reminderDraggingEnabled: true,
     isBackgroundSelectorOpen: false,
     promptedReminders: [],
     tokenDataVisible: true,

@@ -16,18 +16,19 @@ export default function ToggleDrag() {
         setAppState(oldState => {
             return {
                 ...oldState,
-                draggingEnabled: !oldState.draggingEnabled
+                tokenDraggingEnabled: !oldState.tokenDraggingEnabled && !oldState.reminderDraggingEnabled,
+                reminderDraggingEnabled: oldState.tokenDraggingEnabled === oldState.reminderDraggingEnabled
             }
-        })
+        });
     }
 
     if (!appState.tokenDataVisible) return <></>;
     
     return (
         <div onClick={onToggle} 
-             role="button"
-             className="BottomButtons__button BottomButtons__dragToggle" 
-             style={{backgroundImage: 'url("/assets/move.png")', backgroundColor: (appState.draggingEnabled ? "green" : "grey")}}>
+            role="button"
+            className="BottomButtons__button BottomButtons__dragToggle" 
+            style={{backgroundImage: 'url("/assets/move.png")', backgroundColor: (appState.reminderDraggingEnabled ? (appState.tokenDraggingEnabled ? "green" : "#1d5223") : "grey")}}>
         </div>
     )
 }
