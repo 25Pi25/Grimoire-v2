@@ -97,7 +97,7 @@ export default function Card() {
         <div className="Card__content">
             <div className="Card__iconsContainer BagDraw__tokensContainer">
                 {tokenList.map(([_, name], index) =>
-                    name ? <div className="Card__iconContainer BagDraw__tokenContainer" key={index}></div> :
+                    name !== null ? <div className="Card__iconContainer BagDraw__tokenContainer" key={index}></div> :
                     <div className="Card__iconContainer BagDraw__tokenContainer" key={index}
                         style={{ backgroundImage: "url(assets/alive_token.png)" }} onClick={name ? () => {} : () => handleTokenClick(index)}>
                         <p className="Card__title BagDraw__subtitle">{index + 1}</p>
@@ -132,7 +132,7 @@ export default function Card() {
                     />
                 </div>
                 <div className="CharacterSelect__button BagDraw__button" onClick={handleClick}>
-                    <span>{!name ? "Enter your name!" : "Next Player"}</span>
+                    <span>Next Player</span>
                 </div>
             </form>
         </div>
