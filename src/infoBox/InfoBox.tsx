@@ -37,8 +37,8 @@ export default function InfoBox() {
     const onBottom = useMemo(() => {
         if (!token || !tokenZoneRef.current) return false;
         const height = tokenZoneRef.current.clientHeight;
-        return height * 0.6 > token.position.top + appState.tokenSize / 2; // TODO: change 70 to default token size / 2
-    }, [token, tokenZoneRef, appState.tokenSize]);
+        return height * 0.6 > token.position.top + gameState.tokenSize / 2;
+    }, [token, tokenZoneRef, gameState.tokenSize]);
 
     if (token === undefined) {
         return ( <></> );

@@ -89,7 +89,7 @@ export default function TokenZone() {
         />
     ));
 
-    const style = { "--token-size": `${appState.tokenSize}px`} as CSSProperties;
+    const style = { "--token-size": `${gameState.tokenSize}px`} as CSSProperties;
 
     return (
         <div ref={tokenZoneRef} className="DragZone__container" style={style}>

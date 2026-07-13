@@ -41,9 +41,6 @@ export type AppState = {
     /** The currently active card, if any. Null if no card is currently being shown. */
     activeCard?: ActiveCard,
 
-    /** The current size of each token, can be adjusted in the bottom button settings. */
-    tokenSize: number,
-
     /** Data about the dialog */
     dialog?: {
         message: string,
@@ -78,7 +75,6 @@ export const DEFAULT_APP_STATE: AppState = Object.freeze({
         currentTab: NightOrderTab.None,
         openItems: []
     },
-    tokenSize: 140,
     drawingBag: false,
 })
 
