@@ -31,6 +31,7 @@ export default function DraggableReminder({ reminder, className, dragEnabled, pr
     }
 
     function handleMouseDown(e: any) {
+        if (e.button === 2) return true; // Right click
         if (dragEnabled) return true;
         onClick(e);
     }
