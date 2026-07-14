@@ -7,7 +7,7 @@ import { GameContext, GameContextType } from "../data/gameState"
 
 
 type ReminderSpawnerType = {
-    roleId: string,
+    roleId?: string,
     text: string,
     top: number,
     left: number,

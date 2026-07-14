@@ -2,14 +2,14 @@ import { ReminderData } from "../types/Reminder";
 import Reminder from "./Reminder";
 
 type SampleReminderType = {
-    id: string,
+    id?: string,
     text?: string,
     className?: string,
 }
 
 export default function SampleReminder({id, text, className}: SampleReminderType) {
     const dummyReminderInfo: ReminderData = {
-        id: id,
+        id,
         ownerUid: 0,
         reminderUid: 0,
         flipped: false,

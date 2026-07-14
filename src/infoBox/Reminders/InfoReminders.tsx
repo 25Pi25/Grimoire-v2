@@ -11,6 +11,8 @@ type GhostProp = {
     text: string,
 }
 
+const CUSTOM_TOKEN_TEXT = "Custom";
+
 /**
  * The Reminders tab -- where reminders for this token can be instantiated.
  * @param focused If this tab is focused
@@ -35,7 +37,7 @@ export default function InfoReminders({focused, focusCallback, onBottom}: InfoTa
 
         const landingRect = landingRef.current.getBoundingClientRect();
 
-        const newGhosts = role.reminders!.map((reminderText, index) => {
+        const newGhosts = [...role.reminders, CUSTOM_TOKEN_TEXT].map((reminderText, index) => {
         
             const child = landingRef.current!.children[index] as HTMLElement;
             const rect = child.getBoundingClientRect();
@@ -58,7 +60,7 @@ export default function InfoReminders({focused, focusCallback, onBottom}: InfoTa
             className="InfoReminders__dynamicReminder"
             left={left} 
             top={top} 
-            roleId={role.id}
+            roleId={text === CUSTOM_TOKEN_TEXT ? undefined : role.id}
             onBottom={onBottom}
         />
     });
@@ -72,6 +74,11 @@ export default function InfoReminders({focused, focusCallback, onBottom}: InfoTa
                 className="InfoReminders__staticReminder"
             />);
         }
+        staticJsx.push(<SampleReminder 
+            key={CUSTOM_TOKEN_TEXT}
+            text={CUSTOM_TOKEN_TEXT}
+            className="InfoReminders__staticReminder"
+        />);
     }
 
 

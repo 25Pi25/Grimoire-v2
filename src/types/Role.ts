@@ -107,7 +107,8 @@ export function isCompleteRole(obj: any): obj is Role {
     return true;
 }
 
-export function getImage(role: Role, token?: TokenData): string {
+export function getImage(role?: Role, token?: TokenData): string {
+    if (!role) return "assets/custom.webp";
     if (typeof role.image === "string") return role.image;
     if (role.image.length === 1) return role.image[0];
     if (token === undefined) return role.image[0];
