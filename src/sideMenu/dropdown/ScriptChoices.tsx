@@ -60,12 +60,23 @@ export default function ScriptChoices() {
         
         uploadRef.current.click();
     }
-    
-    async function uploadScript() {
+
+    async function uploadFile() {
         if (uploadRef.current === null) return;
-        
-        const raw = await uploadRef.current.files[0].text();
-        
+        uploadScript(await uploadRef.current.files[0].text());
+    }
+
+    async function pasteScript() {
+        let clipboardText = "";
+        try {
+            clipboardText = await navigator.clipboard.readText();
+        } catch { }
+        uploadScript(clipboardText);
+    }
+    
+    function uploadScript(raw: string) {
+        if (!raw) return;
+
         let script: any;
         try {
             script = JSON.parse(raw);
@@ -118,16 +129,25 @@ export default function ScriptChoices() {
                 />
             </div>
             <div style={{height: "15px"}}/>
-            <label 
-                className="SideDropdown__uploadLabel" 
-                style={{backgroundImage: "url(assets/backgrounds/green_swirls.webp)"}}
-                onClick={openUploadDialog}
-                role="button"
-            >  
-                Upload Script
-            </label>
-            <br />
-            <input ref={uploadRef} type="file" accept=".json" onChange={uploadScript} hidden />
+            <div className='SideDropdown__labelList'>
+                <label 
+                    className="SideDropdown__uploadLabel" 
+                    style={{backgroundImage: "url(assets/backgrounds/green_swirls.webp)"}}
+                    onClick={openUploadDialog}
+                    role="button"
+                >  
+                    Upload Script
+                </label>
+                <label 
+                    className="SideDropdown__uploadLabel" 
+                    style={{backgroundImage: "url(assets/backgrounds/green_swirls.webp)"}}
+                    onClick={pasteScript}
+                    role="button"
+                >  
+                    Paste Script
+                </label>
+            </div>
+            <input ref={uploadRef} type="file" accept=".json" onChange={uploadFile} hidden />
             <hr />
         </>
     )

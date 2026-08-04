@@ -118,6 +118,8 @@
 }
 
 .SideDropdown__uploadLabel {
+    margin: 2px;
+    display: inline-block;
     color: white;
     font-family: PiratesBay monospace;
     background-position: 50% 50%;

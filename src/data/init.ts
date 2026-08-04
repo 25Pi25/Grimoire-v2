@@ -1,5 +1,5 @@
 import { GameState } from "../types/GameState";
-import { isCompleteRole, RoleData } from "../types/Role";
+import { customCharacterRole, isCompleteRole, RoleData } from "../types/Role";
 import { JsonScript, Script, updateMeta } from "../types/Script";
 import { getJSON } from "../util";
 import { DEFAULT_SCRIPT_PATHS, formatImportedScript, getLocalScripts, scriptIndexOf } from "./scriptData";
@@ -12,14 +12,15 @@ import { DEFAULT_SCRIPT_PATHS, formatImportedScript, getLocalScripts, scriptInde
  * @param setGameState A callback to set the global game state.
  */
 export default async function init(gameState: GameState, setRoles: any, setScripts: any, setGameState: any) {
-    const roles = await getJSON("tokens.json") as RoleData;
+    const roles: RoleData = {
+        custom: customCharacterRole,
+        ...await getJSON("tokens.json"),
+    };
     const scripts: Script[] = [];
     for (const path of DEFAULT_SCRIPT_PATHS) {
         const script = await getJSON(path) as JsonScript;
         scripts.push(updateMeta(formatImportedScript(script), roles));
     }
-
-    console.log(scripts)
 
     const localScripts = getLocalScripts().concat([gameState.script as JsonScript]);
     localScripts.forEach(script => {
@@ -31,7 +32,6 @@ export default async function init(gameState: GameState, setRoles: any, setScrip
         }
         scripts.push(newScript);
         newScript.slice(1).forEach(role => {
-            console.log(role)
             if (roles[role.id] !== undefined) return;
             if (!isCompleteRole(role)) {
                 throw new Error(`Script contains a role "${role.id}" for which there is no data!`);
@@ -46,7 +46,16 @@ export default async function init(gameState: GameState, setRoles: any, setScrip
         if (state.script.length > 1) return state;
         return {
             ...state,
-            script: gameState.script.length > 1 ? gameState.script : scripts[0]
+            script: gameState.script.length > 1 ? gameState.script : scripts[0],
         }
-    })
+    });
+    setGameState((state: GameState) => { // In case of a homebrew character deleted from the role list, defaults to custom
+        return {
+            ...state,
+            playerTokens: state.playerTokens.map(token => {
+                if (roles[token.id] !== undefined) return token;
+                return { ...token, id: 'custom' };
+            })
+        }
+    });
 }

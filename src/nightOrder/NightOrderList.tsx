@@ -16,10 +16,18 @@ type NightOrderData = {
 
 function getSortingMethod(script: Script, roles: RoleData, timeKey: "firstNight" | "otherNight") {
     const metaNightOrder = script[0][timeKey];
-    if (metaNightOrder !== undefined) {
-        return (a: NightOrderData,b:NightOrderData) => metaNightOrder.indexOf(a.id) - metaNightOrder.indexOf(b.id);
+    if (metaNightOrder === undefined) {
+        return (a: NightOrderData,b:NightOrderData) => (roles[a.id][timeKey] ?? -1) - (roles[b.id][timeKey] ?? -1)
     }
-    return (a:NightOrderData,b:NightOrderData) => (roles[a.id][timeKey] ?? -1) - (roles[b.id][timeKey] ?? -1);
+    return (a: NightOrderData,b:NightOrderData) => {
+        const aIndex = metaNightOrder.indexOf(a.id) ?? -1
+        const bIndex = metaNightOrder.indexOf(b.id) ?? -1
+        if (aIndex === -1 || bIndex === -1) {
+            return (roles[a.id][timeKey] ?? -1) - (roles[b.id][timeKey] ?? -1)
+        }
+        return aIndex - bIndex
+    }
+    // return (a:NightOrderData,b:NightOrderData) => (roles[a.id][timeKey] ?? -1) - (roles[b.id][timeKey] ?? -1);
 }
 
 export default function NightOrderList() {
