@@ -32,11 +32,10 @@ export default function InfoReminders({focused, focusCallback, onBottom}: InfoTa
 
     useEffect(() => {
         if (!landingRef.current) return;
-        if (role.reminders === undefined) return;
 
         const landingRect = landingRef.current.getBoundingClientRect();
 
-        const newGhosts = [...Array.from(new Set(role.reminders)), CUSTOM_TOKEN_TEXT].map((reminderText, index) => {
+        const newGhosts = [...Array.from(new Set(role.reminders ?? [])), CUSTOM_TOKEN_TEXT].map((reminderText, index) => {
         
             const child = landingRef.current!.children[index] as HTMLElement;
             const rect = child.getBoundingClientRect();
@@ -64,13 +63,15 @@ export default function InfoReminders({focused, focusCallback, onBottom}: InfoTa
         />
     });
 
-    for (const reminderText of Array.from(new Set(role.reminders ?? []))) {
-        staticJsx.push(<SampleReminder 
-            key={reminderText}
-            id={roleId}
-            text={reminderText}
-            className="InfoReminders__staticReminder"
-        />);
+    if (true) {
+        for (const reminderText of Array.from(new Set(role.reminders ?? []))) {
+            staticJsx.push(<SampleReminder 
+                key={reminderText}
+                id={roleId}
+                text={reminderText}
+                className="InfoReminders__staticReminder"
+            />);
+        }
     }
     staticJsx.push(<SampleReminder 
         key={CUSTOM_TOKEN_TEXT}
