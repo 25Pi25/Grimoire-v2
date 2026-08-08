@@ -64,15 +64,13 @@ export default function InfoReminders({focused, focusCallback, onBottom}: InfoTa
         />
     });
 
-    if (role.reminders !== undefined) {
-        for (const reminderText of Array.from(new Set(role.reminders!))) {
-            staticJsx.push(<SampleReminder 
-                key={reminderText}
-                id={roleId}
-                text={reminderText}
-                className="InfoReminders__staticReminder"
-            />);
-        }
+    for (const reminderText of Array.from(new Set(role.reminders ?? []))) {
+        staticJsx.push(<SampleReminder 
+            key={reminderText}
+            id={roleId}
+            text={reminderText}
+            className="InfoReminders__staticReminder"
+        />);
     }
     staticJsx.push(<SampleReminder 
         key={CUSTOM_TOKEN_TEXT}
