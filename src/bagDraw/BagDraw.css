@@ -4,6 +4,10 @@
     margin-bottom: 10px;
 }
 
+.BagDraw__closeButton {
+    z-index: 1;
+}
+
 .BagDraw__title {
     width: 100%;
     display: flex;
@@ -18,6 +22,9 @@
     margin: 20px;
 }
 
+.BagDraw__content {
+    height: 100%;
+}
 
 .BagDraw__nameInput {
     width: 20%;
@@ -28,6 +35,8 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    overflow-y: scroll;
+    height: 100%;
 }
 
 .BagDraw__tokenContainer {

@@ -89,12 +89,12 @@ export default function BagDraw() {
 
     if (!currentRole) return <div className="Card__container" style={{ backgroundImage: "url(assets/background-img2.webp)" }}>
         <div 
-            className="Card__closeButton General__backgroundImage" 
+            className="Card__closeButton BagDraw__closeButton General__backgroundImage" 
             onClick={closeMenu}
             role="button"
             style={{backgroundImage: 'url("assets/close.png")'}}
         ></div>
-        <div className="Card__content">
+        <div className="Card__content BagDraw__content">
             <div className="Card__iconsContainer BagDraw__tokensContainer">
                 {tokenList.map(([_, name], index) =>
                     name !== null ? <div className="Card__iconContainer BagDraw__tokenContainer" key={index}></div> :
