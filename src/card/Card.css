@@ -57,7 +57,8 @@
 
 .Card__iconsContainer {
     text-align: center;
-    width: 100%;
+    width: min-content;
+    margin: auto;
     pointer-events: all;
 }
 

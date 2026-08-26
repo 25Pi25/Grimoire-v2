@@ -58,6 +58,9 @@ export type AppState = {
         callback: (id: string, alignment: Alignment) => void
     }
 
+    /* UID for the custom reminder dialog */
+    customReminderUid?: number,
+
     drawingBag: boolean
 }
 
