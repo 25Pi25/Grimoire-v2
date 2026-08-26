@@ -73,6 +73,16 @@ export default function ReminderZone() {
         e.preventDefault();
         e.stopPropagation();
 
+        if (gameState.reminders[index].custom) { // open text prompt to rename if it's custom
+            setAppState(oldState => {
+                return {
+                    ...oldState,
+                    customReminderUid: gameState.reminders[index].reminderUid
+                };
+            })
+            return;
+        }
+
         setGameState(oldState => {
             return {
                 ...oldState,
@@ -84,7 +94,7 @@ export default function ReminderZone() {
                     },
                     ...oldState.reminders.slice(index + 1)
                 ]
-            }
+            };
         });
     }
 

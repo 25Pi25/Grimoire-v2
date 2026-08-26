@@ -1,0 +1,19 @@
+.RenamePrompt__background {
+  display: grid;
+  place-items: center;
+  height: 100%;
+}
+
+.RenamePrompt__content {
+  width: min-content;
+  pointer-events: all;
+  background-color: #000000b7;
+  padding: 5%;
+  display: grid;
+}
+
+.RenamePrompt__input {
+  font-family: TradeGothicLtStd monospace;
+  font-size: 2em;
+  text-align: center;
+}

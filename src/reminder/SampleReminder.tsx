@@ -16,6 +16,7 @@ export default function SampleReminder({id, text, className}: SampleReminderType
         text: text ?? "",
         top: 0,
         left: 0,
+        custom: false
     }
 
     return (<Reminder reminder={dummyReminderInfo} className={className} promptDeletion={false} />)

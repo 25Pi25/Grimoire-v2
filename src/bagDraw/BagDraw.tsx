@@ -19,7 +19,7 @@ function shuffle<T>(arr: T[]): T[] {
         .map(({ val }) => val);
 }
 
-export default function Card() {
+export default function BagDraw() {
     const {gameState, setGameState, appState, setAppState, roles} = useContext(GameContext) as GameContextType;
     const [tokenList, setTokenList] = useState<[TokenData, string | null][]>(
         shuffle(gameState.playerTokens.filter(token => canShuffle(token, roles))).map(x => [x, null])
