@@ -5,6 +5,9 @@
 }
 
 .BagDraw__closeButton {
+    width: 60px;
+    height: 60px;
+    right: 10px;
     z-index: 1;
 }
 
