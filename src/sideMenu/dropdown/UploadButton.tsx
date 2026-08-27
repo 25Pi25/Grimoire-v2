@@ -1,5 +1,5 @@
 import { useContext, useRef } from "react"
-import { isValidGamestate } from "../../types/GameState";
+import { isValidGamestate, updateGameStateVersion } from "../../types/GameState";
 import { GameContext, GameContextType } from "../../data/gameState";
 import { appendCustomRoles } from "../../data/roleData";
 import { commitNewScript } from "../../data/scriptData";
@@ -22,7 +22,8 @@ export default function UploadButton() {
         const raw = await inputRef.current.files[0].text();
         const state = JSON.parse(raw);
 
-        if (!isValidGamestate(state)) {
+        
+        if (!updateGameStateVersion(state) || !isValidGamestate(state)) {
             window.alert("Error importing state. We do not support script migration from grimoire v1 yet, sorry.");
             return;
         }
