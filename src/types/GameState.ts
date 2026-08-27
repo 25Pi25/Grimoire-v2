@@ -46,7 +46,6 @@ export function updateGameStateVersion(obj: any): boolean {
 }
 
 export function isValidGamestate(obj: any): obj is GameState {
-    console.log(obj)
     if (typeof obj !== "object" || obj === null) return false;
     
     if (typeof obj.background !== "string") return false;
