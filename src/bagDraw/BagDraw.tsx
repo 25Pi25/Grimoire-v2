@@ -28,6 +28,7 @@ export default function BagDraw() {
     const [tokenIndex, setTokenIndex] = useState<number | null>(null);
     const [name, setName] = useState<string>("");
     const [storyteller, setStoryteller] = useState(true);
+    const [cancelPrompt, setCancelPrompt] = useState(false);
 
     const amountComplete = useMemo(() => tokenList.reduce((a, [_, name]) => a + (name !== null ? 1 : 0), 0), [tokenList]);
     const tokensComplete = useMemo(() => tokenList.length === amountComplete, [tokenList, amountComplete]);
@@ -54,6 +55,23 @@ export default function BagDraw() {
     }, [tokenList, tokenOrder, tokensComplete, gameState.playerTokens, roles, setAppState, setGameState, gameState.tokenSize, storyteller]);
 
     if (!appState.drawingBag) return <></>;
+
+    function closeMenu() {
+        setAppState(oldState => ({ ...oldState, drawingBag: false }));
+    }
+
+    if (cancelPrompt) return <div className="Card__container" style={{ backgroundImage: "url(assets/background-img2.webp)" }}>
+        <div className="Card__content">
+            <span className="Card__title">Do you want to quit bag drawing?</span>
+            <div className="CharacterSelect__button BagDraw__button" onClick={closeMenu}>
+                <span>Yes</span>
+            </div>
+            <div className="CharacterSelect__button BagDraw__button" onClick={() => setCancelPrompt(false)}>
+                <span>No</span>
+            </div>
+        </div>
+    </div>
+
     if (tokensComplete && !storyteller) return <></>;
 
     function handleClick() {
@@ -68,14 +86,10 @@ export default function BagDraw() {
         setTokenIndex(index);
     }
 
-    function closeMenu() {
-        setAppState(oldState => ({ ...oldState, drawingBag: false }));
-    }
-
     if (tokensComplete) return <div className="Card__container" style={{ backgroundImage: "url(assets/background-img2.webp)" }}>
         <div 
             className="Card__closeButton General__backgroundImage" 
-            onClick={closeMenu}
+            onClick={() => setCancelPrompt(true)}
             role="button"
             style={{backgroundImage: 'url("assets/close.png")'}}
         ></div>
@@ -90,7 +104,7 @@ export default function BagDraw() {
     if (!currentRole) return <div className="Card__container" style={{ backgroundImage: "url(assets/background-img2.webp)" }}>
         <div 
             className="Card__closeButton BagDraw__closeButton General__backgroundImage" 
-            onClick={closeMenu}
+            onClick={() => setCancelPrompt(true)}
             role="button"
             style={{backgroundImage: 'url("assets/close.png")'}}
         ></div>
@@ -110,7 +124,7 @@ export default function BagDraw() {
     return <div className="Card__container" style={{ backgroundImage: "url(assets/background-img2.webp)" }}>
         <div 
             className="Card__closeButton General__backgroundImage" 
-            onClick={closeMenu}
+            onClick={() => setCancelPrompt(true)}
             role="button"
             style={{backgroundImage: 'url("assets/close.png")'}}
         ></div>

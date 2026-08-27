@@ -95,7 +95,7 @@ function aggregateJSX(gameState: GameState, roles: RoleData, elements: MapLike<J
 
 export const alignmentSettings = ["Default", Alignment.Good, Alignment.Evil] as const;
 type AlignmentSetting = (typeof alignmentSettings)[number];
-export const homebrewSettings = ["All", "Vanilla", "Homebrew"] as const;
+export const homebrewSettings = ["Vanilla", "All", "Homebrew"] as const;
 type HomebrewSetting = (typeof homebrewSettings)[number];
 
 /**

@@ -114,8 +114,8 @@ export default function MenuRoles() {
                 viability: Viability.Alive,
                 alignment: alignment ?? getExpectedAlignment(roles[id]),
                 position: {
-                    top: window.innerHeight / 2 - 75,
-                    left: window.innerWidth / 2 - 75,
+                    top: window.innerHeight / 2 - prevState.tokenSize / 2,
+                    left: window.innerWidth / 2 - prevState.tokenSize / 2,
                 },
             };
 

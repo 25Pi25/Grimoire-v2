@@ -83,12 +83,14 @@
     font-family: PiratesBay monospace;
 }
 
+.SideButtons__box {
+    margin-top: 20px;
+}
 
 .SideButtons__container {
     width: 100%;
     text-align: center;
-    margin-top: 30px;
-    height: 80px;
+    height: 60px;
     display: flex;
 }
 
@@ -100,7 +102,7 @@
 }
 
 .SideButtons__clearAll {
-    background-size: 80%;
+    background-size: 17.5%;
     background-color: #ff0000c5;
     flex-grow: 1;
 }
@@ -116,7 +118,7 @@
 }
 
 .SideButtons__bag {
-    background-size: 80%;
+    background-size: 50%;
     background-color: #5948c2;
     flex-grow: 1;
 }

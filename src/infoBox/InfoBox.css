@@ -61,7 +61,7 @@
     width: 200px;
     height: 200px;
     left: 25px;
-    top: 50%;
+    top: 110px;
     transform: translateY(-50%);
     vertical-align: center;
     overflow: hidden;
@@ -70,19 +70,21 @@
     border-radius: 100%;
     transition: width ease-in-out 0.5s,
         height ease-in-out 0.5s,
-        left ease-in-out 0.5s;
+        left ease-in-out 0.5s,
+        top ease-in-out 0.5s
 }
 
 .InfoBox__focus .InfoDetails__token {
-    left: 0px;
-    width: 240px;
-    height: 240px;
+    top: 50%;
+    left: 15px;
+    width: 220px;
+    height: 220px;
 }
 
 .InfoDetails__tokenMask {
     position: absolute;
     left: 25px;
-    top: 50%;
+    top: 110px;
     transform: translateY(-50%);
     height: 200px;
     width: 200px;
@@ -90,19 +92,20 @@
     background-color: black;
     opacity: 0.5;
     border-radius: 100%;
-    transition: width ease-in-out 0.5s, height ease-in-out 0.5s, left ease-in-out 0.5s
+    transition: width ease-in-out 0.5s, height ease-in-out 0.5s, left ease-in-out 0.5s, top ease-in-out 0.5s
 }
 
 .InfoBox__focus .InfoDetails__tokenMask {
-    left: 0px;
-    width: 240px;
-    height: 240px;
+    top: 50%;
+    left: 15px;
+    width: 220px;
+    height: 220px;
 }
 
 .InfoDetails__visibilityIndicator {
     position: absolute;
     left: 25px;
-    top: 50%;
+    top: 110px;
     transform: translateY(-50%);
     height: 200px;
     width: 200px;
@@ -111,25 +114,26 @@
     background-repeat: no-repeat;
     background-size: 60%;
     border-radius: 100%;
-    transition: width ease-in-out 0.5s, height ease-in-out 0.5s, left ease-in-out 0.5s
+    transition: width ease-in-out 0.5s, height ease-in-out 0.5s, left ease-in-out 0.5s, top ease-in-out 0.5s
 }
 
 .InfoBox__focus .InfoDetails__visibilityIndicator {
-    left: 0px;
-    width: 250px;
-    height: 250px;
+    top: 50%;
+    left: 15px;
+    width: 220px;
+    height: 220px;
 }
 
 .InfoDetails__tokenName {
     position: absolute;
-    bottom: 20px;
+    bottom: 10px;
     display: block;
     color: rgb(192, 72, 72);
     font-size: 20pt;
     font-family: PiratesBay monospace;
     width: 250px;
     text-align: center;
-    transition: bottom ease-in-out 0.5s;
+    transition: bottom ease-in-out 0.5s, top ease-in-out 0.5s;
 }
 
 .InfoBox__focus .InfoDetails__tokenName {
