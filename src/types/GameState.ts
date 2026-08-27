@@ -39,7 +39,6 @@ export function updateGameStateVersion(obj: any): boolean {
 }
 
 export function isValidGamestate(obj: any): obj is GameState {
-    console.log(obj)
     if (typeof obj !== "object" || obj === null) return false;
     
     if (typeof obj.background !== "string") return false;
@@ -58,7 +57,6 @@ export function isValidGamestate(obj: any): obj is GameState {
     if (typeof obj.scriptColor !== "string") return false;
     if (typeof obj.scriptId !== "number") return false;
     
-    console.log(obj)
     if (typeof obj.tokenSize !== "number") return false;
     
     return true;
