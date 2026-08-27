@@ -30,12 +30,12 @@ export function shuffleTokens(tokens: TokenData[], roles: RoleData): TokenData[]
 
 export function spreadTokens(tokenSize: number, tokens: TokenData[], roles: RoleData): TokenData[] {
     const centerSize = tokenSize / 2;
-    
-    const center = { 
-        y: document.documentElement.clientHeight / 2, 
+
+    const center = {
+        y: document.documentElement.clientHeight / 2,
         x: document.documentElement.clientWidth / 2,
     };
-    
+
     const BASE_RADIUS = tokenSize;
     const radius = (Math.min(center.y, center.x) - BASE_RADIUS - centerSize) * (Math.min(tokens.length, 15) / 15) + BASE_RADIUS
     if (radius < 0) return tokens;
@@ -45,9 +45,9 @@ export function spreadTokens(tokenSize: number, tokens: TokenData[], roles: Role
         .filter(token => token.visibility === Visibility.Assigned)
         .filter(token => ![Team.Fabled, Team.Loric].includes(roles[token.id].team));
     const total = tokens.length;
-    
+
     const angleSeparation = Math.PI * 2 / total;
-    
+
     const list = tokens.map((token, index) => {
         return {
             angle: Math.atan2(token.position.top + centerSize - center.y, token.position.left + centerSize - center.x),
@@ -56,7 +56,7 @@ export function spreadTokens(tokenSize: number, tokens: TokenData[], roles: Role
         };
     });
 
-    const secondHalf = list.sort(({angle: a1}, {angle: a2}) => a2 - a1).map(({index}, i) => {
+    const secondHalf = list.sort(({ angle: a1 }, { angle: a2 }) => a2 - a1).map(({ index }, i) => {
         const topIndex = Math.ceil((total - 1) * 3 / 4);
         const angle = angleSeparation * (i - topIndex) - Math.PI / 2;
         return {
@@ -113,7 +113,7 @@ export default function SideButtons() {
                     callback
                 }
             }
-        });        
+        });
     }
 
     function bag() {
@@ -126,31 +126,35 @@ export default function SideButtons() {
     }
 
     return (
-        <div className="SideButtons__container">
-            <div 
-                className="SideButtons__button General__backgroundImage SideButtons__clearAll" 
-                style={{backgroundImage: "url(assets/clean.svg)"}}
-                onClick={clearAll}
-                role="button"
-            ></div>
-            <div
-                className="SideButtons__button General__backgroundImage SideButtons__shuffle"
-                style={{backgroundImage: "url(assets/shuffle.svg)"}}
-                onClick={shuffle}
-                role="button"
-            ></div>
-            <div
-                className="SideButtons__button General__backgroundImage SideButtons__spread"
-                style={{backgroundImage: "url(assets/spread.svg)"}}
-                onClick={spread}
-                role="button"
-            ></div>
-            <div
-                className="SideButtons__button General__backgroundImage SideButtons__bag"
-                style={{backgroundImage: "url(assets/bag.svg)"}}
-                onClick={bag}
-                role="button"
-            ></div>
+        <div className="SideButtons__box">
+            <div className="SideButtons__container">
+                <div
+                    className="SideButtons__button General__backgroundImage SideButtons__shuffle"
+                    style={{ backgroundImage: "url(assets/shuffle.svg)" }}
+                    onClick={shuffle}
+                    role="button"
+                ></div>
+                <div
+                    className="SideButtons__button General__backgroundImage SideButtons__spread"
+                    style={{ backgroundImage: "url(assets/spread.svg)" }}
+                    onClick={spread}
+                    role="button"
+                ></div>
+                <div
+                    className="SideButtons__button General__backgroundImage SideButtons__bag"
+                    style={{ backgroundImage: "url(assets/bag.svg)" }}
+                    onClick={bag}
+                    role="button"
+                ></div>
+            </div>
+            <div className="SideButtons__container">
+                <div
+                    className="SideButtons__button General__backgroundImage SideButtons__clearAll"
+                    style={{ backgroundImage: "url(assets/clean.svg)" }}
+                    onClick={clearAll}
+                    role="button"
+                ></div>
+            </div>
         </div>
     )
 }

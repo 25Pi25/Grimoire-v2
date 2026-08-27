@@ -23,7 +23,7 @@ export type InfoTabType = {
 }
 
 /**
- * The info Box. A bar of infomration and actions along the botom of the screen
+ * The info Box. A bar of information and actions along the botom of the screen
  * that shows info on the state of a currently selected token. Only appears if
  * there is a selected token to provide information about.
  * @returns 
