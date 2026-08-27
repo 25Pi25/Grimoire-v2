@@ -64,7 +64,6 @@ export function isValidGamestate(obj: any): obj is GameState {
     if (typeof obj.scriptColor !== "string") return false;
     if (typeof obj.scriptId !== "number") return false;
     
-    console.log(obj)
     if (typeof obj.tokenSize !== "number") return false;
     
     return true;
