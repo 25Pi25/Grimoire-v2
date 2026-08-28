@@ -1,0 +1,15 @@
+
+.Footer__container {
+    color: #B0197E;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8em;
+    font-family: PiratesBay monospace;
+}
+
+.Footer__link {
+    color: #E11C52
+}
