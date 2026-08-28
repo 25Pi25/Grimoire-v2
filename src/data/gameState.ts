@@ -5,7 +5,7 @@ import { RoleData } from "../types/Role";
 import { Script } from "../types/Script";
 
 /* The current version of game state. As new properties are added/changed/removed, the version must also be updated. */
-export const GAME_STATE_VERSION = 1;
+export const GAME_STATE_VERSION = 2;
 
 export const DEFAULT_GAME_STATE: GameState = Object.freeze<GameState>({
     version: GAME_STATE_VERSION,

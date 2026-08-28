@@ -19,7 +19,7 @@ function shuffle<T>(arr: T[]): T[] {
         .map(({ val }) => val);
 }
 
-export default function Card() {
+export default function BagDraw() {
     const {gameState, setGameState, appState, setAppState, roles} = useContext(GameContext) as GameContextType;
     const [tokenList, setTokenList] = useState<[TokenData, string | null][]>(
         shuffle(gameState.playerTokens.filter(token => canShuffle(token, roles))).map(x => [x, null])
@@ -103,12 +103,12 @@ export default function Card() {
 
     if (!currentRole) return <div className="Card__container" style={{ backgroundImage: "url(assets/background-img2.webp)" }}>
         <div 
-            className="Card__closeButton General__backgroundImage" 
+            className="Card__closeButton BagDraw__closeButton General__backgroundImage" 
             onClick={() => setCancelPrompt(true)}
             role="button"
             style={{backgroundImage: 'url("assets/close.png")'}}
         ></div>
-        <div className="Card__content">
+        <div className="Card__content BagDraw__content">
             <div className="Card__iconsContainer BagDraw__tokensContainer">
                 {tokenList.map(([_, name], index) =>
                     name !== null ? <div className="Card__iconContainer BagDraw__tokenContainer" key={index}></div> :

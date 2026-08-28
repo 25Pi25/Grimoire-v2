@@ -7,7 +7,7 @@ import { GameContext, GameContextType } from "../data/gameState"
 
 
 type ReminderSpawnerType = {
-    roleId: string,
+    roleId?: string,
     text: string,
     top: number,
     left: number,
@@ -26,7 +26,8 @@ export default function ReminderSpawner({roleId, text, top, left, ownerUid, clas
         left: left,
         ownerUid: 0,
         reminderUid: 0,
-        flipped: false
+        flipped: false,
+        custom: false
     }
 
     function onDrop(e: DraggableEvent, data: DraggableData) {
@@ -40,6 +41,7 @@ export default function ReminderSpawner({roleId, text, top, left, ownerUid, clas
             ownerUid,
             reminderUid: Date.now(),
             flipped: false,
+            custom: !roleId,
             ...spawnPos
         };
 

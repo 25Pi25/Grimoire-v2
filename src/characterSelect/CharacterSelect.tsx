@@ -10,7 +10,7 @@ import { MapLike } from "typescript";
 import { Team } from "../types/Team";
 import { Alignment, getExpectedAlignment } from "../types/Alignment";
 
-const isHomebrew = (role: Role) => typeof role.image === "string" && role.image.includes("unofficial");
+const isHomebrew = (role: Role) => typeof role.image === "string" || !role.image[0].includes("/official")
 // TODO: move somewhere else and then add system for this
 
 /**
@@ -48,6 +48,7 @@ function populateJSX(
         if (!(role.team in items)) return;
         if (homebrewSetting === "Homebrew" && !isHomebrew(role)) return;
         if (homebrewSetting === "Vanilla" && isHomebrew(role)) return;
+        if (role.id === 'custom') return;
         items[role.team].push((
             <SampleToken
                 id={role.id}

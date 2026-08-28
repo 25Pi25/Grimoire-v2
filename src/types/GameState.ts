@@ -34,6 +34,13 @@ export function updateGameStateVersion(obj: any): boolean {
             reminder.flipped = false;
         }
     }
+    if (obj.version !== 2) { // Version 2, added custom to reminders
+        if (!Array.isArray(obj.reminders)) return false;
+        if (!obj.reminders.every((reminder: any) => typeof reminder === "object" && reminder !== null)) return false;
+        for (const reminder of obj.reminders) {
+            reminder.custom = false;
+        }
+    }
     obj.version = GAME_STATE_VERSION;
     return true;
 }

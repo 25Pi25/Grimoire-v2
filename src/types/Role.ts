@@ -66,6 +66,14 @@ export type Role = {
     jinxes?: Jinx[]
 }
 
+export const customCharacterRole = {
+    id: "custom",
+    name: "Custom",
+    ability: "You are a custom character.",
+    team: Team.Townsfolk,
+    image: "https://release.botc.app/resources/characters/generic/custom.webp"
+}
+
 export function isCompleteRole(obj: any): obj is Role {
     if (typeof obj !== "object") return false;
 
@@ -73,8 +81,10 @@ export function isCompleteRole(obj: any): obj is Role {
     if (typeof obj.name !== "string") return false;
     if (typeof obj.flavor !== "string" && obj.flavor !== undefined) return false;
     if (!Object.values(Team).includes(obj.team)) return false;
-    if (typeof obj.image !== "string") return false; // TODO: should allow for arrays. 
-
+    if (!Array.isArray(obj.image) && typeof obj.image !== "string") return false;
+    if (Array.isArray(obj.image)) {
+        if (!obj.image.every((r: any) => typeof r === "string")) return false;
+    }
     if (obj.reminders !== undefined) {
         if (!Array.isArray(obj.reminders)) return false;
         if (!obj.reminders.every((r: any) => typeof r === "string")) return false;
@@ -82,32 +92,37 @@ export function isCompleteRole(obj: any): obj is Role {
     
     if (obj.firstNight !== undefined) {
         if (typeof obj.firstNight !== "number") return false;
-        // Night order specified requires reminder text. 
-        if (obj.firstNightReminder === undefined && obj.firstNight <= 0) return false;
-        if (typeof obj.firstNightReminder !== "string") return false;
+        // Night order specified requires reminder text.
+        if (obj.firstNight !== 0) {
+            if (obj.firstNightReminder === undefined && obj.firstNight < 0) return false;
+            if (typeof obj.firstNightReminder !== "string") return false;
+        }
     }
 
     if (obj.otherNight !== undefined) {
         if (typeof obj.otherNight !== "number") return false;
-        // Night order specified requires reminder text. 
-        if (obj.otherNightReminder === undefined && obj.otherNight <= 0) return false;
-        if (typeof obj.otherNightReminder !== "string") return false;
+        // Night order specified requires reminder text.
+        if (obj.otherNight !== 0) { // TODO: make otherNight 0 not show up on the night order
+            if (obj.otherNightReminder === undefined && obj.otherNight < 0) return false;
+            if (typeof obj.otherNightReminder !== "string") return false;
+        }
     }
-
+    
     if (obj.cards !== undefined) {
         if (!Array.isArray(obj.cards)) return false;
         if (!obj.cards.every(isCard)) return false;
     }
-
+    
     if (obj.jinxes !== undefined) {
         if (!Array.isArray(obj.jinxes)) return false;
         if (!obj.jinxes.every(isJinx)) return false;
     }
-
+    
     return true;
 }
 
-export function getImage(role: Role, token?: TokenData): string {
+export function getImage(role?: Role, token?: TokenData): string {
+    if (!role) return "assets/custom.webp";
     if (typeof role.image === "string") return role.image;
     if (role.image.length === 1) return role.image[0];
     if (token === undefined) return role.image[0];

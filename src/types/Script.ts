@@ -99,7 +99,6 @@ export function isCompleteScript(obj: any, roles: RoleData): obj is Script {
 
     let hasMeta = false;
     for (const role of obj) {
-        console.log(role)
         if (isMeta(role)) {
             if (hasMeta) return false;
             hasMeta = true;
@@ -107,7 +106,13 @@ export function isCompleteScript(obj: any, roles: RoleData): obj is Script {
         }
         if (typeof role !== "object") return false;
         if (typeof role.id !== "string") return false;
-        if (isCompleteRole(role)) continue;
+        if (isCompleteRole(role)) {
+            if (roles[role.id] !== undefined && roles[role.id].ability !== role.ability) { // TODO: find alt solution to not modify
+                role.id += '_'
+            }
+            continue;
+        }
+
         if (roles[role.id] === undefined) {
             return false;
         }
