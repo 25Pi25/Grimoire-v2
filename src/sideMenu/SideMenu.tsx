@@ -5,6 +5,7 @@ import MenuRoles from './roles/MenuRoles';
 import SideButtons from './SideButtons';
 import SideDropdown from './dropdown/SideDropdown';
 import { GameContext, GameContextType } from '../data/gameState';
+import Footer from './Footer';
 
 export default function SideMenu() {
     const { appState } = useContext(GameContext) as GameContextType;
@@ -32,6 +33,8 @@ export default function SideMenu() {
                     <SideDropdown />
                     <SideButtons />
                     <MenuRoles />
+                    <br />
+                    <Footer />
                 </div>
             </div>
         </>
