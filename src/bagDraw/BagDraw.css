@@ -25,27 +25,28 @@
     margin: 20px;
 }
 
-.BagDraw__content {
-    height: 100%;
-}
-
 .BagDraw__nameInput {
     width: 20%;
     margin: 30px;
+}
+
+.BagDraw__content {
+    display: grid;
+    place-items: center;
+    overflow-y: scroll;
+    height: 100%;
 }
 
 .BagDraw__tokensContainer {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    overflow-y: scroll;
-    height: 100%;
+    align-items: center;
 }
 
 .BagDraw__tokenContainer {
     width: 225px;
-    height: auto;
-    aspect-ratio: 1/1;
+    height: 225px;
 }
 
 .Card__title.BagDraw__subtitle {
