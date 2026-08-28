@@ -10,12 +10,10 @@ type TeamSectionType = {
     children: ReactNode[]
 }
 
-export default function TeamSection({teamId, actualCount, expectedCount, children}: TeamSectionType) {
+export default function TeamSection({ teamId, actualCount, expectedCount, children }: TeamSectionType) {
 
     const [open, setOpen] = useState(true);
 
-    if (children.length === 0) return <></>
-    
     const team = TEAM_DATA[teamId];
 
     let ratio = actualCount + "";
@@ -23,8 +21,8 @@ export default function TeamSection({teamId, actualCount, expectedCount, childre
 
     return (
         <div>
-            <div 
-                className="SideMenu__header" 
+            <div
+                className="SideMenu__header"
                 style={{ color: team.color, filter: `grayscale(${open ? 0 : 100}%)`, transition: "0.5s" }}
                 onClick={() => setOpen(!open)}
                 role="button"

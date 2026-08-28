@@ -28,7 +28,7 @@ export default function HiddenToken({ token, className }: HiddenTokenType) {
     }
 
     let travellerIndicatorJsx = <></>
-    if (role?.team === Team.Traveller && token.viability === Viability.Alive) {
+    if (role?.team === Team.Traveller) {
         // TODO: Images could be arrays of strings.
         travellerIndicatorJsx = <img src={getImage(role)} className="General__backgroundImage HiddenToken__roleIndicator" alt={role.name} />
     }

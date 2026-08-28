@@ -17,3 +17,9 @@
 .BottomButtons__dragToggle {
     right: 120px;
 }
+
+.BottomButtons__tokenAdjust {
+    width: 30px;
+    height: 30px;
+    right: 230px;
+}

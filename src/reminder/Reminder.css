@@ -16,6 +16,8 @@
     overflow: hidden;
     box-sizing: border-box;
     border-radius: 100%;
+    
+    transition: rotate 0.2s ease-in-out;
 }
 
 .Reminder__image {
@@ -31,16 +33,14 @@
 }
 
 .Reminder__text {
-    font-family: Dumbledor monospace;
-    font-size: 12px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%);
+    font-family: TradeGothicLtStd monospace;
+    font-size: 20px;
+    text-shadow: 1px 1px #000,0 -1px 1px #000,1px 0 1px #000,-1px 0 1px #000;
+    font-weight: 700;
     line-height: 70%;
-    color: black;
     pointer-events: none;
     width: 80%;
+    fill: white;
     /* Bounding box check */
     /* background-color: rgba(255, 0, 0, 0.2);
     border: 1px solid red; */
@@ -55,4 +55,8 @@
     border-radius: 100%;
     user-select: none;
     opacity: 75%;
+}
+
+.Reminder__flipped {
+    rotate: 180deg;
 }

@@ -13,7 +13,8 @@ type TokenType = {
     token: TokenData
     focused?: boolean
     className?: string,
-    onClick?: () => void
+    onClick?: () => void,
+    title?: boolean
 }
 
 /**
@@ -26,22 +27,27 @@ type TokenType = {
  * @param enabled Whether this token should be allowed to be dragged around.
  * @returns 
  */
-export default function Token({ token, focused = false, className, onClick }: TokenType) {
+export default function Token({ token, focused = false, className, onClick, title }: TokenType) {
 
     const { roles } = useContext(GameContext) as GameContextType;
 
     const role = roles[token.id];
-    
     return (
         <div
             className={className}
             style={{
-                backgroundImage: `url(/assets/token.png)`,
+                backgroundImage: `url(/assets/token-DRfx6YVD.webp)`,
+                backgroundSize: "113% auto",
+                backgroundPosition: "50% 50%",
+                borderRadius: "50%",
+                containerType: "inline-size"
             }}
             onClick={() => onClick?.()}
+            title={title ? role.ability : undefined}
         >
-            <img className="Token__image General__backgroundImage" src={getImage(role, token)} alt={role.name}/>
-            <Shading token={token} focused={focused} className={className}></Shading>
+            <Shading token={token} focused={focused} className={className} />
+            <div className="TokenName__border" />
+            <img className="Token__image General__backgroundImage" src={getImage(role, token)} alt={role.name} />
             <TokenName name={role.name} />
             <Shroud token={token} />
             <VisibilityIndicator token={token}></VisibilityIndicator>

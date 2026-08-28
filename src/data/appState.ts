@@ -1,12 +1,14 @@
 import { createContext } from "react";
 import { Card } from "../types/Role";
 import { NightOrderTab } from "../nightOrder/TopButtons";
+import { Team } from "../types/Team";
+import { Alignment } from "../types/Alignment";
 
 /**
  * The current Card. Is a Card, but includes data on which tokens are in the menu as well.
  */
 export type ActiveCard = Card & {
-    shownIcons: (string | undefined)[]
+    shownIcons: ([string, Alignment | undefined] | undefined)[]
 }
 
 /**
@@ -16,8 +18,11 @@ export type AppState = {
     /** The UID of the token that is being shown via the Info Box, */
     activeTokenUid: number,
 
-    /** Whether dragging is enabled. */
-    draggingEnabled: boolean,
+    /** Whether token dragging is enabled. */
+    tokenDraggingEnabled: boolean,
+
+    /** Whether reminder token dragging is enabled. */
+    reminderDraggingEnabled: boolean,
 
     /** Whether the background selector UI is shown. */
     isBackgroundSelectorOpen: boolean
@@ -47,7 +52,13 @@ export type AppState = {
      * The callback to run in the mutate menu when any token is selected. 
      * Notably, The Mutate menu is only shown iff there is an action to do. 
      */
-    characterSelectCallback?: (id: string) => void
+    characterSelect?: {
+        type: "script" | "offscript",
+        team?: Team
+        callback: (id: string, alignment: Alignment) => void
+    }
+
+    drawingBag: boolean
 }
 
 /**
@@ -55,14 +66,16 @@ export type AppState = {
  */
 export const DEFAULT_APP_STATE: AppState = Object.freeze({
     activeTokenUid: -1,
-    draggingEnabled: true,
+    tokenDraggingEnabled: true,
+    reminderDraggingEnabled: true,
     isBackgroundSelectorOpen: false,
     promptedReminders: [],
     tokenDataVisible: true,
     nightOrderData: {
         currentTab: NightOrderTab.None,
         openItems: []
-    }
+    },
+    drawingBag: false,
 })
 
 export const AppContext = createContext(null);

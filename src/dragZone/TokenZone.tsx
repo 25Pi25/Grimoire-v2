@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { CSSProperties, useContext } from "react";
 import { DraggableEvent, DraggableData } from "react-draggable";
 import { GameContext, GameContextType } from "../data/gameState";
 import DraggableToken from "../token/DraggableToken";
@@ -11,14 +11,14 @@ import { isStorytellerToken } from "../data/teamData";
  * @returns 
  */
 export default function TokenZone() {
-    const {gameState, setGameState, appState, setAppState, roles} = useContext(GameContext) as GameContextType;
+    const { gameState, setGameState, appState, setAppState, roles, tokenZoneRef } = useContext(GameContext) as GameContextType;
 
     function handleDrag(_: DraggableEvent, ui: DraggableData, index: number) {
         setGameState(oldState => {
             return {
                 ...oldState,
                 playerTokens: [
-                    ...oldState.playerTokens.slice(0,index),
+                    ...oldState.playerTokens.slice(0, index),
                     {
                         ...oldState.playerTokens[index],
                         position: {
@@ -26,7 +26,7 @@ export default function TokenZone() {
                             left: oldState.playerTokens[index].position.left + ui.deltaX,
                         }
                     },
-                    ...oldState.playerTokens.slice(index+1)
+                    ...oldState.playerTokens.slice(index + 1)
                 ]
             }
         });
@@ -34,6 +34,7 @@ export default function TokenZone() {
 
     function handleClick(e: any, index: number) {
         const token = gameState.playerTokens[index];
+        e.preventDefault();
         e.stopPropagation();
         if (appState.tokenDataVisible) {
             setAppState(oldState => {
@@ -44,9 +45,9 @@ export default function TokenZone() {
             });
             return;
         }
-        
+
         if (isStorytellerToken(token, roles)) return;
-        
+
         setGameState(oldState => {
             return {
                 ...oldState,
@@ -56,7 +57,7 @@ export default function TokenZone() {
                         ...token!,
                         viability: nextViability(token.viability)
                     },
-                    ...oldState.playerTokens.slice(index+1)
+                    ...oldState.playerTokens.slice(index + 1)
                 ]
             }
         })
@@ -64,11 +65,11 @@ export default function TokenZone() {
 
     function handleDrop(index: number) {
         setGameState(oldState => {
-            const newState: GameState = {...oldState};
+            const newState: GameState = { ...oldState };
             const oldToken = oldState.playerTokens[index];
             newState.playerTokens = [
-                ...oldState.playerTokens.slice(0,index),
-                ...oldState.playerTokens.slice(index+1),
+                ...oldState.playerTokens.slice(0, index),
+                ...oldState.playerTokens.slice(index + 1),
                 oldToken
             ];
             return newState;
@@ -76,10 +77,10 @@ export default function TokenZone() {
     }
 
     const tokens = gameState.playerTokens.map((token, index) => (
-        <DraggableToken 
+        <DraggableToken
             key={token.uid}
             focused={appState.activeTokenUid === token.uid}
-            dragEnabled={appState.draggingEnabled} 
+            dragEnabled={appState.tokenDraggingEnabled}
             isDataVisible={appState.tokenDataVisible}
             token={token}
             onDrag={(e, ui) => handleDrag(e, ui, index)}
@@ -88,8 +89,10 @@ export default function TokenZone() {
         />
     ));
 
+    const style = { "--token-size": `${gameState.tokenSize}px`} as CSSProperties;
+
     return (
-        <div className="DragZone__container">
+        <div ref={tokenZoneRef} className="DragZone__container" style={style}>
             {tokens}
         </div>
     )

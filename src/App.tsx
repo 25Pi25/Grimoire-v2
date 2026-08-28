@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './App.css';
 import Background from './background/Background';
 import DragZone from './dragZone/DragZone';
@@ -16,6 +16,7 @@ import { Script } from './types/Script';
 import init from './data/init';
 import { saveLocalScripts } from './data/scriptData';
 import Dialog from './dialog/Dialog';
+import BagDraw from './bagDraw/BagDraw';
 
 function App() {
 
@@ -23,6 +24,8 @@ function App() {
     const [appState, setAppState] = useState(DEFAULT_APP_STATE);
     const [roles, setRoles] = useState<RoleData>({});
     const [scripts, setScripts] = useState<Script[]>([]);
+    const tokenZoneRef = useRef<HTMLDivElement>(null);
+    
 
     useEffect(() => {
         if (Object.keys(roles).length > 0) return;
@@ -54,6 +57,7 @@ function App() {
             appState, setAppState,
             roles, setRoles,
             scripts, setScripts,
+            tokenZoneRef
         }}>
             <Background />
             <DragZone />
@@ -63,8 +67,9 @@ function App() {
             <InfoBox />
             <BackgroundSelector />
             <Card />
-            <CharacterSelect />
+            {appState.characterSelect && <CharacterSelect />}
             <Dialog />
+            {appState.drawingBag && <BagDraw />}
         </GameContext>
     );
 }

@@ -3,10 +3,11 @@ import TextareaAutosize from 'react-textarea-autosize';
 
 
 type CardTitleType = {
-    title: string
+    title: string,
+    editable?: boolean
 }
 
-export default function CardTitle({ title }: CardTitleType) {
+export default function CardTitle({ title, editable = true }: CardTitleType) {
     const ref = useRef<any>(null)
     const [value, setValue] = useState(title);
 
@@ -21,7 +22,8 @@ export default function CardTitle({ title }: CardTitleType) {
             ref={ref} 
             className="Card__title" 
             placeholder='You Learn...' 
-            value={value} 
+            value={value}
+            contentEditable={editable}
             onChange={onChange}
         />
     );

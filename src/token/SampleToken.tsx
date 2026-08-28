@@ -27,5 +27,5 @@ export default function SampleToken({id, alignment, name, className, onClick}: S
         position: {left: 0, top: 0},
     };
 
-    return (<Token token={dummyTokenInfo} className={className} onClick={onClick}></Token>)
+    return (<Token token={dummyTokenInfo} className={className} onClick={onClick} title={true}></Token>)
 }

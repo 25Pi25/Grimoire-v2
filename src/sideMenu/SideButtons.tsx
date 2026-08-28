@@ -6,7 +6,7 @@ import { RoleData } from "../types/Role";
 import { Team } from "../types/Team";
 
 
-function shuffleTokens(tokens: TokenData[], roles: RoleData): TokenData[] {
+export function shuffleTokens(tokens: TokenData[], roles: RoleData): TokenData[] {
     const output = tokens
         .filter(token => token.visibility !== Visibility.Assigned || [Team.Fabled, Team.Loric].includes(roles[token.id].team))
     tokens = tokens
@@ -28,41 +28,42 @@ function shuffleTokens(tokens: TokenData[], roles: RoleData): TokenData[] {
     }));
 }
 
-function spreadTokens(tokens: TokenData[], roles: RoleData): TokenData[] {
-    
-    const center = { 
-        y: document.documentElement.scrollHeight / 2, 
-        x: document.documentElement.scrollWidth / 2,
-    };
-    
-    const radius = Math.min(center.y, center.x) - 150;
-    if (radius < 0) return tokens;
+export function spreadTokens(tokenSize: number, tokens: TokenData[], roles: RoleData): TokenData[] {
+    const centerSize = tokenSize / 2;
 
+    const center = {
+        y: document.documentElement.clientHeight / 2,
+        x: document.documentElement.clientWidth / 2,
+    };
+
+    const BASE_RADIUS = tokenSize;
+    const radius = (Math.min(center.y, center.x) - BASE_RADIUS - centerSize) * (Math.min(tokens.length, 15) / 15) + BASE_RADIUS
+    if (radius < 0) return tokens;
 
     const firstHalf = tokens.filter(token => token.visibility !== Visibility.Assigned || [Team.Fabled, Team.Loric].includes(roles[token.id].team))
     tokens = tokens
         .filter(token => token.visibility === Visibility.Assigned)
-        .filter(token => ![Team.Fabled, Team.Loric].includes(roles[token.id].team))
-    
+        .filter(token => ![Team.Fabled, Team.Loric].includes(roles[token.id].team));
     const total = tokens.length;
-    const angleSeperation = Math.PI * 2 / total;
-    
+
+    const angleSeparation = Math.PI * 2 / total;
+
     const list = tokens.map((token, index) => {
         return {
-            angle: Math.atan2(token.position.top + 75 - center.y, token.position.left + 75 - center.x),
+            angle: Math.atan2(token.position.top + centerSize - center.y, token.position.left + centerSize - center.x),
             index,
             id: token.id
         };
     });
 
-
-    const secondHalf = list.sort(({angle: a1}, {angle: a2}) => a2 - a1).map(({index}, i) => {
-        const angle = angleSeperation * (-(total - 1) / 2 + i);
+    const secondHalf = list.sort(({ angle: a1 }, { angle: a2 }) => a2 - a1).map(({ index }, i) => {
+        const topIndex = Math.ceil((total - 1) * 3 / 4);
+        const angle = angleSeparation * (i - topIndex) - Math.PI / 2;
         return {
             ...tokens[index],
             position: {
-                top: center.y + radius * -Math.sin(angle) - 75,
-                left: center.x + radius * Math.cos(angle) - 75
+                top: center.y + radius * Math.sin(angle) - centerSize,
+                left: center.x + radius * -Math.cos(angle) - centerSize
             }
         }
     });
@@ -77,8 +78,7 @@ export default function SideButtons() {
         setGameState(oldState => {
             return {
                 ...oldState,
-                playerTokens: shuffleTokens(oldState.playerTokens, roles),
-                reminders: []
+                playerTokens: shuffleTokens(oldState.playerTokens, roles)
             }
         });
     }
@@ -87,8 +87,7 @@ export default function SideButtons() {
         setGameState(oldState => {
             return {
                 ...oldState,
-                playerTokens: spreadTokens(oldState.playerTokens, roles),
-                reminders: []
+                playerTokens: spreadTokens(oldState.tokenSize, oldState.playerTokens, roles)
             }
         });
     }
@@ -114,31 +113,48 @@ export default function SideButtons() {
                     callback
                 }
             }
-        })
+        });
+    }
 
-        
+    function bag() {
+        setAppState(oldState => {
+            return {
+                ...oldState,
+                drawingBag: true
+            }
+        });
     }
 
     return (
-        <div className="SideButtons__container">
-            <div 
-                className="SideButtons__button General__backgroundImage SideButtons__clearAll" 
-                style={{backgroundImage: "url(assets/clean.svg)"}}
-                onClick={clearAll}
-                role="button"
-            ></div>
-            <div
-                className="SideButtons__button General__backgroundImage SideButtons__shuffle"
-                style={{backgroundImage: "url(assets/shuffle.svg)"}}
-                onClick={shuffle}
-                role="button"
-            ></div>
-            <div
-                className="SideButtons__button General__backgroundImage SideButtons__spread"
-                style={{backgroundImage: "url(assets/spread.svg)"}}
-                onClick={spread}
-                role="button"
-            ></div>
+        <div className="SideButtons__box">
+            <div className="SideButtons__container">
+                <div
+                    className="SideButtons__button General__backgroundImage SideButtons__shuffle"
+                    style={{ backgroundImage: "url(assets/shuffle.svg)" }}
+                    onClick={shuffle}
+                    role="button"
+                ></div>
+                <div
+                    className="SideButtons__button General__backgroundImage SideButtons__spread"
+                    style={{ backgroundImage: "url(assets/spread.svg)" }}
+                    onClick={spread}
+                    role="button"
+                ></div>
+                <div
+                    className="SideButtons__button General__backgroundImage SideButtons__bag"
+                    style={{ backgroundImage: "url(assets/bag.svg)" }}
+                    onClick={bag}
+                    role="button"
+                ></div>
+            </div>
+            <div className="SideButtons__container">
+                <div
+                    className="SideButtons__button General__backgroundImage SideButtons__clearAll"
+                    style={{ backgroundImage: "url(assets/clean.svg)" }}
+                    onClick={clearAll}
+                    role="button"
+                ></div>
+            </div>
         </div>
     )
 }

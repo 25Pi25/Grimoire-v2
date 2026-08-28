@@ -12,7 +12,8 @@ import TeamSection from "./TeamSection";
 import { Team } from "../../types/Team";
 import { sortAlphabetical, sortSao } from "../../data/roleSorting";
 import { playerCounts, roleDistribution } from "../../data/teamData";
-import { getExpectedAlignment } from "../../types/Alignment";
+import { Alignment, getExpectedAlignment } from "../../types/Alignment";
+import MenuRoleOffscript from "./MenuRoleOffscript";
 
 /**
  * Construct the side menu's individual items using the given script.
@@ -21,12 +22,12 @@ import { getExpectedAlignment } from "../../types/Alignment";
  * @returns 
  */
 function populateJSX(
-        gameState: GameState, 
-        roles: RoleData,
-        searchFilter: string,
-        sortMethod: (r1: Role, r2: Role) => number,
-        createCallback: (id: string) => void
-    ): MapLike<JSX.Element[]> {
+    gameState: GameState, 
+    roles: RoleData,
+    searchFilter: string,
+    sortMethod: (r1: Role, r2: Role) => number,
+    createCallback: (id: string, alignment: Alignment) => void
+): MapLike<JSX.Element[]> {
 
     const script = gameState.script.slice(1) as (RoleIdentifier | Role)[];
     const tokens = gameState.playerTokens;
@@ -60,7 +61,12 @@ function populateJSX(
     return items;
 }
 
-function aggregateJSX(gameState: GameState, roles: RoleData, elements: MapLike<JSX.Element[]>): JSX.Element[] {
+function aggregateJSX(
+    gameState: GameState,
+    roles: RoleData,
+    elements: MapLike<JSX.Element[]>,
+    callback: (id: string) => void
+): JSX.Element[] {
     const actual = playerCounts(gameState.playerTokens, roles);
     const [townsfolk, outsiders, minions] = roleDistribution(gameState.playerCount);
 
@@ -78,6 +84,7 @@ function aggregateJSX(gameState: GameState, roles: RoleData, elements: MapLike<J
         .map<JSX.Element>((team: Team) => (
             <TeamSection key={team} teamId={team} expectedCount={expected[team]} actualCount={actual[team]}>
                 {elements[team] ?? []}
+                <MenuRoleOffscript teamId={team} callback={callback} />
             </TeamSection>
         ));
 }
@@ -97,7 +104,7 @@ export default function MenuRoles() {
         setSearchTerm(searchRef.current.value)
     }
 
-    const createToken = useCallback((id: string) => {
+    const createToken = useCallback((id: string, alignment?: Alignment) => {
         setGameState(prevState => {
             const newToken = {
                 id: id,
@@ -105,10 +112,10 @@ export default function MenuRoles() {
                 name: "",
                 visibility: Visibility.Assigned,
                 viability: Viability.Alive,
-                alignment: getExpectedAlignment(roles[id]),
+                alignment: alignment ?? getExpectedAlignment(roles[id]),
                 position: {
-                    top: window.innerHeight / 2 - 75,
-                    left: window.innerWidth / 2 - 75,
+                    top: window.innerHeight / 2 - prevState.tokenSize / 2,
+                    left: window.innerWidth / 2 - prevState.tokenSize / 2,
                 },
             };
 
@@ -123,7 +130,7 @@ export default function MenuRoles() {
             () => populateJSX(gameState, roles, searchTerm, sortMethod, createToken),
             [gameState, roles, searchTerm, sortMethod, createToken]
     )
-    const sectionJSX = aggregateJSX(gameState, roles, roleJSX);
+    const sectionJSX = aggregateJSX(gameState, roles, roleJSX, createToken);
     
     return (
         <>

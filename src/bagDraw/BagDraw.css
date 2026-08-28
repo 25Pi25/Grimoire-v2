@@ -1,0 +1,46 @@
+.BagDraw__button.CharacterSelect__button {
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.BagDraw__title {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.BagDraw__title .Card__title {
+    text-align: right;
+    width: auto;
+    margin: 20px;
+}
+
+
+.BagDraw__nameInput {
+    width: 20%;
+    margin: 30px;
+}
+
+.BagDraw__tokensContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.BagDraw__tokenContainer {
+    width: 225px;
+    height: auto;
+    aspect-ratio: 1/1;
+}
+
+.Card__title.BagDraw__subtitle {
+    font-size: 50pt;
+    color: black;
+    margin: auto;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 210px;
+}

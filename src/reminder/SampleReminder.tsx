@@ -12,6 +12,7 @@ export default function SampleReminder({id, text, className}: SampleReminderType
         id: id,
         ownerUid: 0,
         reminderUid: 0,
+        flipped: false,
         text: text ?? "",
         top: 0,
         left: 0,

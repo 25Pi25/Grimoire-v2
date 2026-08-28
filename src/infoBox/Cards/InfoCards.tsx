@@ -69,7 +69,7 @@ const DEFAULT_CARDS: CardMap = Object.freeze({
         "color": "purple",
         "title": "You Are", 
         "icons": 1,
-        "autofill": "_self"
+        "autofill": "_selfAlignment"
     },
     "YOUR_ABILITY": { 
         "listTitle": "Your Ability Text", 
@@ -131,7 +131,7 @@ export default function InfoCards({focused, focusCallback}: InfoTabType) {
                 onClick={focusCallback}
                 role="button"
             >
-                <img className="InfoBox__tabImage" src="assets/list.png" alt=""></img>
+                <img className="InfoBox__tabImage" src="assets/list.png" alt="" draggable="false" />
             </div>
             <div className="InfoCards__content">
                 {cardJsx}
