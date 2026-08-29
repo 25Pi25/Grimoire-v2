@@ -62,10 +62,10 @@ function App() {
             tokenZoneRef
         }}>
             <Background />
-            {!appState.tokenDataVisible && <TownInfo />}
             <DragZone />
             <BottomButtons />
             <NightOrder />
+            {!appState.tokenDataVisible && <TownInfo />}
             <SideMenu />
             <InfoBox />
             <BackgroundSelector />
