@@ -27,7 +27,7 @@ export default function TownInfo() {
       <p style={{ color: "#ff2a2a" }}>1 Demon</p>
     </div>
     <div className="TownInfo__box">
-      <p>{totalAliveCount} / {totalAliveCount} Alive</p>
+      <p>{totalAliveCount} / {gameState.playerCount} Alive</p>
       <p>{totalAliveCount-travellerAliveCount} Alive Player(s)</p>
       <p>{travellerAliveCount} Alive Traveller(s)</p>
       <p>Majority {Math.ceil(totalAliveCount/2)}</p>
