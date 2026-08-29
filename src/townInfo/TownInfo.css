@@ -1,0 +1,20 @@
+.TownInfo__container {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  left: 10px;
+  bottom: 10px;
+  gap: 3px;
+}
+
+.TownInfo__box {
+  background-color: rgba(50,50,50,0.8);
+  border: 2px solid black;
+  border-radius: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  font-family: TradeGothicLtStd monospace;
+  color: white;
+}

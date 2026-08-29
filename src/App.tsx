@@ -18,6 +18,7 @@ import { saveLocalScripts } from './data/scriptData';
 import Dialog from './dialog/Dialog';
 import BagDraw from './bagDraw/BagDraw';
 import RenamePrompt from './renamePrompt/RenamePrompt';
+import TownInfo from './townInfo/TownInfo';
 
 function App() {
 
@@ -61,6 +62,7 @@ function App() {
             tokenZoneRef
         }}>
             <Background />
+            {!appState.tokenDataVisible && <TownInfo />}
             <DragZone />
             <BottomButtons />
             <NightOrder />
