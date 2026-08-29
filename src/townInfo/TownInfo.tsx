@@ -10,14 +10,12 @@ import { Team } from "../types/Team";
 export default function TownInfo() {
   const { gameState, roles } = useContext(GameContext) as GameContextType;
   const [townsfolk, outsiders, minions] = roleDistribution(gameState.playerCount);
-  const allTokens = useMemo(() => {
+  const aliveTokens = useMemo(() => {
     return gameState.playerTokens.filter(token => 
       token.visibility === Visibility.Assigned &&
+      token.viability === Viability.Alive &&
       !isStorytellerToken(token, roles));
   }, [gameState, roles]);
-  const aliveTokens = useMemo(() => {
-    return allTokens.filter(token => token.viability === Viability.Alive);
-  }, [allTokens]);
   const totalAliveCount = aliveTokens.length;
   const travellerAliveCount = aliveTokens.filter(token => roles[token.id].team === Team.Traveller).length;
   
