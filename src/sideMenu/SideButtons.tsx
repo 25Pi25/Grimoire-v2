@@ -8,10 +8,10 @@ import { Team } from "../types/Team";
 
 export function shuffleTokens(tokens: TokenData[], roles: RoleData): TokenData[] {
     const output = tokens
-        .filter(token => token.visibility !== Visibility.Assigned || [Team.Fabled, Team.Loric].includes(roles[token.id].team))
+        .filter(token => token.visibility !== Visibility.Assigned || [Team.Traveller, Team.Fabled, Team.Loric].includes(roles[token.id].team))
     tokens = tokens
         .filter(token => token.visibility === Visibility.Assigned)
-        .filter(token => ![Team.Fabled, Team.Loric].includes(roles[token.id].team))
+        .filter(token => ![Team.Traveller, Team.Fabled, Team.Loric].includes(roles[token.id].team))
     const positions = tokens.map(t => t.position);
     const names = tokens.map(t => t.name);
     for (let i = positions.length - 1; i >= 0; i--) {
