@@ -10,12 +10,15 @@ import { Team } from "../types/Team";
 export default function TownInfo() {
   const { gameState, roles } = useContext(GameContext) as GameContextType;
   const [townsfolk, outsiders, minions] = roleDistribution(gameState.playerCount);
-  const aliveTokens = useMemo(() => {
+  const allTokens = useMemo(() => {
     return gameState.playerTokens.filter(token => 
       token.visibility === Visibility.Assigned &&
-      token.viability === Viability.Alive &&
       !isStorytellerToken(token, roles));
   }, [gameState, roles]);
+  const aliveTokens = useMemo(() => {
+    return gameState.playerTokens.filter(token => token.viability === Viability.Alive);
+  }, [allTokens]);
+  const totalCount = allTokens.length;
   const totalAliveCount = aliveTokens.length;
   const travellerAliveCount = aliveTokens.filter(token => roles[token.id].team === Team.Traveller).length;
   
@@ -27,7 +30,7 @@ export default function TownInfo() {
       <p style={{ color: "#ff2a2a" }}>1 Demon</p>
     </div>
     <div className="TownInfo__box">
-      <p>{totalAliveCount} / {gameState.playerCount + travellerAliveCount} Alive</p>
+      <p>{totalAliveCount} / {totalCount} Alive</p>
       <p>{totalAliveCount-travellerAliveCount} Alive Player(s)</p>
       <p>{travellerAliveCount} Alive Traveller(s)</p>
       <p>Majority {Math.ceil(totalAliveCount/2)}</p>
