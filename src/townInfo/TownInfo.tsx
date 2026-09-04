@@ -16,7 +16,7 @@ export default function TownInfo() {
       !isStorytellerToken(token, roles));
   }, [gameState, roles]);
   const aliveTokens = useMemo(() => {
-    return gameState.playerTokens.filter(token => token.viability === Viability.Alive);
+    return allTokens.filter(token => token.viability === Viability.Alive);
   }, [allTokens]);
   const totalCount = allTokens.length;
   const totalAliveCount = aliveTokens.length;
