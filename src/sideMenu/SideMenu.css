@@ -107,6 +107,12 @@
     flex-grow: 1;
 }
 
+.SideButtons__flip {
+    background-size: 70%;
+    background-color: #585858e7;
+    flex-grow: 1;
+}
+
 .SideButtons__shuffle {
     background-color: #585858e7;
     flex-grow: 1;
@@ -118,7 +124,7 @@
 }
 
 .SideButtons__bag {
-    background-size: 50%;
+    background-size: 65%;
     background-color: #5948c2;
     flex-grow: 1;
 }

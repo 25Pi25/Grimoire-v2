@@ -72,7 +72,22 @@ export function spreadTokens(tokenSize: number, tokens: TokenData[], roles: Role
 }
 
 export default function SideButtons() {
-    const { setGameState, setAppState, roles } = useContext(GameContext) as GameContextType;
+    const { gameState, setGameState, setAppState, roles } = useContext(GameContext) as GameContextType;
+
+    function flip() {
+        setGameState(oldState => {
+            return {
+                ...oldState,
+                playerTokens: oldState.playerTokens.map(token => ({
+                    ...token,
+                    position: {
+                        top: document.documentElement.clientHeight - token.position.top - gameState.tokenSize,
+                        left: document.documentElement.clientWidth - token.position.left - gameState.tokenSize
+                    }
+                }))
+            }
+        });
+    }
 
     function shuffle() {
         setGameState(oldState => {
@@ -128,6 +143,13 @@ export default function SideButtons() {
     return (
         <div className="SideButtons__box">
             <div className="SideButtons__container">
+                <div
+                    // TODO: use new class to differentiate from shuffle
+                    className="SideButtons__button General__backgroundImage SideButtons__flip"
+                    style={{ backgroundImage: "url(assets/flip-forward.svg)" }}
+                    onClick={flip}
+                    role="button"
+                ></div>
                 <div
                     className="SideButtons__button General__backgroundImage SideButtons__shuffle"
                     style={{ backgroundImage: "url(assets/shuffle.svg)" }}
