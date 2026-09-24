@@ -56,6 +56,7 @@
 
 .Card__title.BagDraw__subtitle.BagDraw__name {
     line-height: normal;
+    width: 95%;
 }
 
 .BagDraw__tokenContainer {
