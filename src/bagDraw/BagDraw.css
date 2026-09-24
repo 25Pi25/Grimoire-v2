@@ -44,6 +44,20 @@
     align-items: center;
 }
 
+.BagDraw__namesContainer {
+    column-count: 2;
+    column-gap: 10px;
+}
+
+.BagDraw__nameContainer {
+    width: 80%;
+    height: auto;
+}
+
+.Card__title.BagDraw__subtitle.BagDraw__name {
+    line-height: normal;
+}
+
 .BagDraw__tokenContainer {
     width: 225px;
     height: 225px;
