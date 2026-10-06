@@ -3,13 +3,6 @@ import { TEAM_DATA } from "../data/roleData"
 import { getImage, Role } from "../types/Role";
 
 
-type NightOrderItemType = {
-    role: Role;
-    alive: boolean;
-    assigned: boolean;
-    firstNight: boolean;
-}
-
 const REMINDER_FLAG = ":reminder:"
 
 function infoJsx(info: string) {
@@ -61,15 +54,48 @@ function infoJsx(info: string) {
     return <span className="NightOrderItem__text"> {pieces} </span>
 }
 
+type NightOrderRoleType = {
+    role: Role;
+    alive: boolean;
+    assigned: boolean;
+    firstNight: boolean;
+}
+
 /**
- * A generic night order item.
+ * A night order item based on a role.
  * @param role Role data about this night order item. 
  * @param alive Whether any player given this role is alive. 
- * @param assigned Whether this role is assigned to any player
+ * @param assigned Whether this role is assigned to any player.
  * @param firstNight True iff this is the first night.
  * @returns 
  */
-export default function NightOrderItem({role, alive, assigned, firstNight }: NightOrderItemType) {
+export function NightOrderRole({ role, alive, assigned, firstNight }: NightOrderRoleType) {
+    let color = TEAM_DATA[role.team].color;
+    if (!alive) color = "#000000";
+
+    const info = firstNight ? role.firstNightReminder ?? "" : role.otherNightReminder ?? "";
+
+    return <NightOrderItem image={getImage(role)} name={role.name} color={color} info={info} assigned={assigned}/>
+}
+
+type NightOrderItemType = {
+    image: string;
+    name: string;
+    color: string;
+    info: string;
+    assigned: boolean;
+}
+
+/**
+ * A generic night order item.
+ * @param image The image URL.
+ * @param name The name of the night order item.
+ * @param color The color of the item.
+ * @param info Displayable info for the night order item.
+ * @param assigned Whether this role is assigned to any player.
+ * @returns 
+ */
+export function NightOrderItem({ image, name, color, info, assigned }: NightOrderItemType) {
     const [open, setOpen] = useState(false);
     const ref = useRef<any>(null);
 
@@ -81,11 +107,6 @@ export default function NightOrderItem({role, alive, assigned, firstNight }: Nig
             ref.current.style.height = "";
         }
     })
-
-    let color = TEAM_DATA[role.team].color;
-    if (!alive) color = "#000000";
-
-    const info = firstNight ? role.firstNightReminder ?? "" : role.otherNightReminder ?? "";
 
     let visibility = <></>
     if (!assigned) {
@@ -101,7 +122,7 @@ export default function NightOrderItem({role, alive, assigned, firstNight }: Nig
             role="button"
         >
             {infoJsx(info)}
-            <img className="NightOrderItem__image" src={getImage(role)} alt={role.name}/>
+            <img className="NightOrderItem__image" src={image} alt={name}/>
             {visibility}
         </div>
     )
